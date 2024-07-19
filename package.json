@@ -1,0 +1,17 @@
+{
+  "name": "advanced-web-applications-project",
+  "version": "1.0.0",
+  "description": "This is the project work of the Advanced Web Applications course.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:client": "cd client && npm start",
+    "dev:server": "cd server && npm start",
+    "dev:both": "concurrently \"npm run dev:client\" \"npm run dev:server\""
+  },
+  "author": "T.L",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
