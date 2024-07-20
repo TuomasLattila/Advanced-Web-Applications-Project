@@ -22,8 +22,8 @@ function Login() {
           <Stack spacing={2} direction="column">
             <TextField
               id="outlined-email-input"
-              label="Email"
-              type="email"
+              label="Email/username"
+              type="text"
               autoComplete="current-email"
               size='lg'
               required
