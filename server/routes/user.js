@@ -17,7 +17,7 @@ const passport = require('../strategy/auth')
 
 /* GET one user based on userid. */
 router.get('/profile', passport.authenticate('jwt', { session: false }), function(req, res, next) {
-  res.send('Authorizied user');
+  res.send(req.user);
 });
 
 //Post request to register new user
@@ -29,7 +29,7 @@ router.post('/register',
       return res.sendStatus(400) //Bad request (Invalid email or passwords)
     }
     try {
-      const foundUser = await User.findOne({ $or: [{ username: req.body.username}, { email: req.body.email }]})
+      const foundUser = await User.findOne({ $or: [req.body.username !== ''? { username: req.body.username} : { email: req.body.email }, { email: req.body.email }]})
       if (!foundUser) {
         bcrypt.genSalt(10, (err, salt) => {
           if (err) throw err

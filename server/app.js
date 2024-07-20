@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
+const cors = require('cors')
 dotenv.config()
 
 var indexRouter = require('./routes/index');
@@ -23,6 +24,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//cors setup:
+if (process.env.NODE_ENV === "development") {
+  var corsOptions = {
+    origin: "http://localhost:3000",
+    optionsSuccessStatus: 200
+  }
+  app.use(cors(corsOptions))
+}
+
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);

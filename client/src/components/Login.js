@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 //MUI:
 import Stack from '@mui/material/Stack';
@@ -10,22 +10,78 @@ import TextField from '@mui/material/TextField';
 import '../css/Login.css'
 
 function Login() {
+  const [identifier, setIdentifier] = useState('')
+  const [password, setPassword] = useState('')
+  const [fetchBoolean, setFetchBoolean] = useState(false) //False until form submits.
+
+  //useEffect should run only when identifier, password and fetchBoolean states are changed.
+  useEffect(() => {
+    if (fetchBoolean === true) {
+      setFetchBoolean(false) //Set false, so that the fetch won't after every change
+      const loginUser = async () => { //Async arrow function for making register request.
+        const res = await fetch('/user/login', {
+          method: "POST",
+          body: JSON.stringify({
+            identifier: identifier,
+            password: password
+          }),
+          headers: {
+            "Content-type": 'application/json'
+          }
+        }) 
+        if (res.status === 200) {
+          console.log("Kirjautuminen onnistui!")
+          setIdentifier('')
+          setPassword('')
+          const json = await res.json()
+          console.log(json)
+          //TODO: Store the jwt token to localStorege and move on to profile page
+        }
+      }
+      loginUser()
+    }
+  }, [password, identifier, fetchBoolean])
+
+  //This arrow function runs when the form element is submitted. It changes the state variables.
+  const handleChangeOnSubmit = (event) => {
+    event.preventDefault()
+    const elements = event.target.elements
+    setIdentifier(elements.identifier.value)
+    setPassword(elements.password.value)
+
+    if (identifier !== '' && password !== '') {
+      setFetchBoolean(true) //Set true (The registerUser fetch-function is allowed to run)
+    }
+  }
+
+  //2 functions for handling the value change in the inputfileds
+  const handleIdentifierChange = (event) => {
+    setIdentifier(event.target.value)
+  }
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value)
+  }
+
   return (
     <div className='container'> 
       <Box
       component="form"
       noValidate
       autoComplete="off"
+      onSubmit={handleChangeOnSubmit}
       >
-        <div style={{margin: 100}}>
+        <div style={{margin: 150}}>
         <h1 style={{textAlign: "center"}}>Login!</h1>
           <Stack spacing={2} direction="column">
             <TextField
-              id="outlined-email-input"
+              id="outlined-input"
               label="Email/username"
               type="text"
               autoComplete="current-email"
-              size='lg'
+              name='identifier'
+              value={identifier}
+              onChange={handleIdentifierChange}
               required
             />
             <TextField
@@ -33,6 +89,9 @@ function Login() {
               label="Password"
               type="password"
               autoComplete="current-password"
+              name='password'
+              value={password}
+              onChange={handlePasswordChange}
               required
             />
             <Button type='submit' id='register' variant='contained'>Log in</Button>
