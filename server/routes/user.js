@@ -9,12 +9,15 @@ const jwt = require('jsonwebtoken')
 //Models:
 const User = require('../models/User')
 
+//Authorization:
+const passport = require('../strategy/auth')
+
 
 //ROUTES:
 
 /* GET one user based on userid. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/profile', passport.authenticate('jwt', { session: false }), function(req, res, next) {
+  res.send('Authorizied user');
 });
 
 //Post request to register new user
