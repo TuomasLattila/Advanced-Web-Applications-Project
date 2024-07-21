@@ -9,11 +9,16 @@ import TextField from '@mui/material/TextField';
 //css:
 import '../css/Login.css'
 
+//RRD:
+import { useNavigate } from 'react-router-dom';
+
 function Login() {
   const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const [fetchBoolean, setFetchBoolean] = useState(false) //False until form submits.
 
+  const navigate = useNavigate()
+ 
   //useEffect should run only when identifier, password and fetchBoolean states are changed.
   useEffect(() => {
     if (fetchBoolean === true) {
@@ -26,7 +31,7 @@ function Login() {
             password: password
           }),
           headers: {
-            "Content-type": 'application/json'
+            "Content-type": 'application/json' 
           }
         }) 
         if (res.status === 200) {
@@ -34,13 +39,13 @@ function Login() {
           setIdentifier('')
           setPassword('')
           const json = await res.json()
-          console.log(json)
-          //TODO: Store the jwt token to localStorege and move on to profile page
+          localStorage.setItem('token', json.token) //Store the jwt token to localStorege
+          navigate('/', { replace: true }) //Navigate to index page, after succesfull login
         }
       }
       loginUser()
     }
-  }, [password, identifier, fetchBoolean])
+  }, [password, identifier, fetchBoolean, navigate])
 
   //This arrow function runs when the form element is submitted. It changes the state variables.
   const handleChangeOnSubmit = (event) => {

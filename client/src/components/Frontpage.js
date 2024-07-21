@@ -1,5 +1,9 @@
 import React from 'react'
 
+//Components:
+import Profile from './Profile';
+
+
 //MUI:
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -11,6 +15,10 @@ import '../css/Frontpage.css'
 import {Link} from 'react-router-dom'
  
 function Frontpage() {
+  if (localStorage.getItem('token')) {
+    return <Profile /> //Returns the profile component, becuase token is found
+  }
+
   return (
     <div className='container' style={{margin: 100}}>
       <Stack spacing={2} direction="column">

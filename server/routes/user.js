@@ -16,8 +16,12 @@ const passport = require('../strategy/auth')
 //ROUTES:
 
 /* GET one user based on userid. */
-router.get('/profile', passport.authenticate('jwt', { session: false }), function(req, res, next) {
-  res.send(req.user);
+router.get('/data', passport.authenticate('jwt', { session: false }), function(req, res, next) {
+  res.json({
+    username: req.user.username,
+    email: req.user.email,
+    image: req.user.image
+  });
 });
 
 //Post request to register new user
@@ -39,7 +43,7 @@ router.post('/register',
               username: req.body.username,
               email: req.body.email,
               password: hash,
-              image: null
+              image: null 
             })
             await newUser.save()
             res.sendStatus(200) //OK (New user saved)
@@ -63,7 +67,11 @@ router.post('/login', async (req, res, next) => {
           const secret = process.env.SECRET
           const token = jwt.sign({ _id: foundUser._id}, secret)
           if (token) {
-            res.status(200).json({ success: true, token: token}) //OK (Send new token to user)
+            res.status(200).json({ success: true, token: token, user: {
+              username: foundUser.username,
+              email: foundUser.email,
+              image: foundUser.image
+            } }) //OK (Send new token and user info to client)
           }
         } else {
           res.sendStatus(401) //Unauthorized (Password didn't match)

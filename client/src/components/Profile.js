@@ -1,5 +1,8 @@
 import React from 'react'
 
+//Components:
+import AcountInfo from './AcountInfo';
+
 //MUI Components
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -15,13 +18,21 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
+//RRD:
+import { useNavigate } from 'react-router-dom'
+
 const pages = ['Start swiping', 'Chat'];
-const settings = ['Account', 'Logout'];
+const settings = ['Profile', 'Logout'];
 
 function Profile() {
+  const navigate = useNavigate();
+
+  //Material ui hidden menus state variables:
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+
+  //Material ui functions to handle hidden menus
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -33,9 +44,19 @@ function Profile() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = () => { 
     setAnchorElUser(null);
   };
+
+  //Function for loging the user out.
+  const logUserOut = () => {
+    localStorage.removeItem('token')
+    navigate(0, { replace: true }) // delete token and refresh the index page.
+  }
+
+  const navigateToProfile = () => {
+    navigate(0, { replace: true }) // Refreshes, because this is profile page
+  }
 
 
   return (
@@ -78,7 +99,7 @@ function Profile() {
                 anchorEl={anchorElNav}
                 anchorOrigin={{
                   vertical: 'bottom',
-                  horizontal: 'left',
+                  horizontal: 'left', 
                 }}
                 keepMounted
                 transformOrigin={{
@@ -152,7 +173,14 @@ function Profile() {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <MenuItem key={setting} onClick={() => {
+                    handleCloseUserMenu()
+                    if (setting === 'Logout') {
+                      logUserOut()
+                    } if (setting === 'Profile') {
+                      navigateToProfile() 
+                    }
+                  }}>
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
@@ -161,9 +189,9 @@ function Profile() {
           </Toolbar>
         </Container>
       </AppBar>
-      <div className='container'>
-        
-      </div>
+      
+      <AcountInfo />
+
     </div>
   )
 }

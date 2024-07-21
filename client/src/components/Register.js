@@ -9,17 +9,22 @@ import TextField from '@mui/material/TextField';
 //css:
 import '../css/Register.css'
 
+//RRD:
+import { useNavigate } from 'react-router-dom';
+
 function Register() {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fetchBoolean, setFetchBoolean] = useState(false) //False until form submits.
 
+  const navigate = useNavigate()
+
   //useEffect should run only when at least email, password and fetchBoolean states are changed.
   useEffect(() => {
     if (fetchBoolean === true) {
-      setFetchBoolean(false) //Set false, so that the fetch won't after every change
-      const registerUser = async () => { //Async arrow function for making register request.
+      setFetchBoolean(false) //Set false, so that the fetch won't run after every change
+      const registerUser = async () => { //Async arrow function for making register request to server.
         const res = await fetch('/user/register', {
           method: "POST",
           body: JSON.stringify({
@@ -32,16 +37,13 @@ function Register() {
           }
         }) 
         if (res.status === 200) {
-          console.log("Rekisteröinti onnistui!")
-          setUsername('')
-          setEmail('')
-          setPassword('')
-          //TODO: Move to login page after successfull registering.
+          console.log("Rekisteröinti onnistui!")            
+          navigate('/login', { replace: true, state: { msg: "MOI!" } }) //use navigate to replace page with login page.      
         }
       }
       registerUser()
     }
-  }, [password, username, email, fetchBoolean])
+  }, [password, username, email, fetchBoolean, navigate])
 
   //This arrow function runs when the form element is submitted. It changes the states.
   const handleChangeOnSubmit = (event) => {
