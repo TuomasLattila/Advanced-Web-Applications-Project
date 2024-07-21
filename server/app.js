@@ -9,6 +9,7 @@ dotenv.config()
 
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
+var imagesRouter = require('./routes/images');
 
 var app = express();
 
@@ -37,5 +38,6 @@ if (process.env.NODE_ENV === "development") {
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
+app.use('/images', imagesRouter);
 
 module.exports = app;

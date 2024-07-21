@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken')
 
 //Models:
 const User = require('../models/User')
+const Image = require('../models/Image')
 
 //Authorization:
 const passport = require('../strategy/auth')
@@ -83,6 +84,23 @@ router.post('/login', async (req, res, next) => {
   } catch (error) {
     res.sendStatus(500) //Internal Server error (Something went wrong with the process)
   }
+})
+
+router.put('/', async (req, res, next) => {
+  try {
+    const foundUser = await User.findOne({ email: req.body.email })
+    if (foundUser) {
+      const foundImage = await Image.deleteOne({ _id: foundUser.image }) //Delete old picture
+      foundUser.image = req.body.imgId
+      await foundUser.save()
+      res.sendStatus(200) //OK (New profile picture saved.)
+    } else {
+      res.sendStatus(400)//Bad request (Invalid email or passwords)
+    }
+  } catch (error) {
+    console.log(error)
+    res.sendStatus(500) //Internal Server error (Something went wrong with the process)
+  } 
 })
 
 module.exports = router;
