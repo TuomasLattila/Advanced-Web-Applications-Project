@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 
+//Components:
+import DisplayEdit from './DisplayEdit';
+
 //MUI:
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Divider from '@mui/material/Divider';
 
 //RRD:
 import { useNavigate } from 'react-router-dom'
@@ -16,7 +19,7 @@ const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
   height: 1,
-  overflow: 'hidden',
+  overflow: 'hidden', 
   position: 'absolute',
   bottom: 0,
   left: 0,
@@ -27,7 +30,7 @@ const VisuallyHiddenInput = styled('input')({
 function AcountInfo() {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
-  const [image, setImage] = useState('')
+  const [imageSrc, setImageSrc] = useState('')
 
   const navigate = useNavigate();
 
@@ -45,11 +48,11 @@ function AcountInfo() {
         setUsername(json.username)
         setEmail(json.email)
         if (json.image !== null){
-          setImage(`/images/${json.image}`)
+          setImageSrc(`/images/${json.image}`) //set profile picture imageSrc
         }
       } else {
         localStorage.removeItem('token')
-        navigate(0, { replace: true }) //If authorization went wrong, logout.
+        navigate('/', { replace: true }) //If authorization went wrong, logout.
       }
     } 
     fetchUserData()
@@ -66,7 +69,7 @@ function AcountInfo() {
     if (imgRes.ok) {
       const imgId = await imgRes.text()
       console.log(email) 
-      const res = await fetch('/user', {
+      const res = await fetch('/user/update/image', {
         method: "PUT",
         body: `{"email": "${email}", "imgId": ${imgId}}`,
         headers: {
@@ -80,36 +83,37 @@ function AcountInfo() {
   }
 
   return (
-    <div className='container' style={{ padding: 70, margin: 30, backgroundColor: "#2196f3", borderRadius: '20px' }}>
-      <Stack direction="column" spacing={4} sx={{ alignItems: "center" }}>
-        <Stack direction='row' spacing={2} sx={{ alignItems: "center", paddingLeft: '178px' }}>  
-          <Avatar
-            src={image}
-            sx={{ width: 112, height: 112 }}
-          />
-          <Button
-            component="label"
-            role={undefined}
-            variant="contained"
-            tabIndex={-1}
-            startIcon={<CloudUploadIcon />}
-            sx={{ width: 164, height: 40 }}
-          >
-            Change image
-            <VisuallyHiddenInput type="file" accept='image/*' onChange={handleImageChange} />
-          </Button>
-        </Stack>
-        <Typography
-          variant='h3'
-        >
-          {username}
-        </Typography>
-        <Typography
-          variant='h3'
-        >
-          {email} 
-        </Typography>
-      </Stack>  
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div className='container' style={{ flex: 'auto', maxWidth:'700px', padding: 70, margin: 30, backgroundColor: "#2196f3", borderRadius: '20px' }}>
+        <Stack direction="column" spacing={4} sx={{ alignItems: "center" }}>
+          <Stack direction='row' width="100%" display='flex' justifyContent='space-between' alignItems='center'>  
+            <Avatar
+              src={imageSrc}
+              sx={{ width: 112, height: 112 }}
+            />
+            <Button
+              component="label"
+              role={undefined}
+              variant="contained"
+              tabIndex={-1}
+              startIcon={<CloudUploadIcon />}
+              sx={{ width: 164, height: 40 }}
+            >
+              Change image
+              <VisuallyHiddenInput type="file" accept='image/*' onChange={handleImageChange} />
+            </Button>
+          </Stack>
+          <Stack  direction="column" width="100%" borderRadius='20px' padding='10px' style={{ backgroundColor: 'grey'}} >
+            
+            <DisplayEdit text={username} label={'username'}/> {/* Editable user data */}
+            
+            <Divider style={{ borderWidth: '2px', marginTop: '10px', marginBottom: '10px' }}/>
+            
+            <DisplayEdit text={email} label={'email'}/> {/* Editable user data */}
+          
+          </Stack>
+        </Stack>  
+      </div>
     </div>
   )
 }

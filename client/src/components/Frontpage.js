@@ -1,7 +1,8 @@
 import React from 'react'
 
 //Components:
-import Profile from './Profile';
+import NavBar from './NavBar';
+import AcountInfo from './AcountInfo';
 
 
 //MUI:
@@ -16,7 +17,7 @@ import {Link} from 'react-router-dom'
  
 function Frontpage() {
   if (localStorage.getItem('token')) {
-    return <Profile /> //Returns the profile component, becuase token is found
+    return <NavBar Component={AcountInfo} /> //Returns the profile component, becuase token is found
   }
 
   return (

@@ -16,7 +16,7 @@ const passport = require('../strategy/auth')
 
 //ROUTES:
 
-/* GET one user based on userid. */
+/* GET one user based based on given userid. */
 router.get('/data', passport.authenticate('jwt', { session: false }), function(req, res, next) {
   res.json({
     username: req.user.username,
@@ -25,7 +25,7 @@ router.get('/data', passport.authenticate('jwt', { session: false }), function(r
   });
 });
 
-//Post request to register new user
+//Post request to register new user. Validates the email and password.
 router.post('/register',
   body('email').isString().isEmail(), 
   body('password').isString().isStrongPassword({minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1}), 
@@ -58,7 +58,7 @@ router.post('/register',
     }
 })
 
-//Post request to log in a user
+//Post request to log in a user, creates and returns JWT token
 router.post('/login', async (req, res, next) => {
   try {
     const foundUser = await User.findOne({$or: [{ username: req.body.identifier }, { email: req.body.identifier }]})
@@ -86,21 +86,51 @@ router.post('/login', async (req, res, next) => {
   }
 })
 
-router.put('/', async (req, res, next) => {
+//This route replaces the old profile picture with new one, for given user. 
+router.put('/update/image', async (req, res, next) => {
   try {
     const foundUser = await User.findOne({ email: req.body.email })
     if (foundUser) {
-      const foundImage = await Image.deleteOne({ _id: foundUser.image }) //Delete old picture
+      await Image.deleteOne({ _id: foundUser.image }) //Delete old picture
       foundUser.image = req.body.imgId
       await foundUser.save()
       res.sendStatus(200) //OK (New profile picture saved.)
     } else {
-      res.sendStatus(400)//Bad request (Invalid email or passwords)
+      res.sendStatus(400)//Bad request (User was not found)
     }
   } catch (error) {
-    console.log(error)
     res.sendStatus(500) //Internal Server error (Something went wrong with the process)
   } 
+})
+
+router.put('/update/username', async (req, res, next) => {
+  try {
+    const foundUser = await User.findOne({ username: req.body.old_username })
+    if (foundUser) {
+      foundUser.username = req.body.new_username
+      await foundUser.save()
+      res.sendStatus(200) //OK (New username saved.)
+    } else {
+      res.sendStatus(400)//Bad request (User was not found)
+    }
+  } catch (error) {
+    res.sendStatus(500) //Internal Server error (Something went wrong with the process)
+  }
+})
+
+router.put('/update/email', async (req, res, next) => {
+  try {
+    const foundUser = await User.findOne({ email: req.body.old_email })
+    if (foundUser) {
+      foundUser.email = req.body.new_email
+      await foundUser.save()
+      res.sendStatus(200) //OK (New username saved.)
+    } else {
+      res.sendStatus(400)//Bad request (User was not found)
+    }
+  } catch (error) {
+    res.sendStatus(500) //Internal Server error (Something went wrong with the process)
+  }
 })
 
 module.exports = router;

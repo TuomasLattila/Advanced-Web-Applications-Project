@@ -1,8 +1,5 @@
 import React from 'react'
 
-//Components:
-import AcountInfo from './AcountInfo';
-
 //MUI Components
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -31,7 +28,7 @@ import { useNavigate } from 'react-router-dom'
 const pages = ['Start swiping', 'Chat'];
 const settings = ['Profile', 'Logout'];
 
-function Profile() {
+function Profile({ Component }) { //This component takes another component as param, and it is diplyed under the navbar.
   const navigate = useNavigate();
 
   //Material ui hidden menus state variables:
@@ -49,15 +46,22 @@ function Profile() {
   }
 
   const navigateToProfile = () => {
-    navigate(0, { replace: true }) // Refreshes, because this is profile page
+    navigate('/', { replace: true }) // Refreshes, because this is profile page
+  }
+  const navigateToChat = () => {
+    navigate('/chat') // Navigates to the chat page
+  }
+  const navigateToSwiping = () => {
+    navigate('/swipe') // Navigates to the swipe page
   }
 
+  //This is the sidebar that opens when hamburger icon is pressed on smaller screens.
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
         {pages.map((text) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={text === "Chat"? navigateToChat : navigateToSwiping}>
               <ListItemIcon>
                 {text === "Start swiping"? <FavoriteBorderIcon /> : <ChatIcon />}
               </ListItemIcon>
@@ -147,6 +151,7 @@ function Profile() {
                 <Button
                   key={page}
                   sx={{ my: 2, color: 'white', display: 'block' }}
+                  onClick={page === "Chat"? navigateToChat : navigateToSwiping}  
                 >
                   {page}
                 </Button>
@@ -166,9 +171,8 @@ function Profile() {
           </Toolbar>
         </Container>
       </AppBar>
-      
-      <AcountInfo />
-
+          
+      <Component /> {/* Component which has been gotten as param */}
     </div>
   )
 }
