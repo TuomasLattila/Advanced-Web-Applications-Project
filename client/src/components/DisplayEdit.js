@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 
 //MUI:
 import Stack from '@mui/material/Stack';
@@ -10,17 +10,20 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 
 //RRD:
-import { useNavigate } from 'react-router-dom'
+//import { useNavigate } from 'react-router-dom'
 
-function DisplayEdit({text, label}) {
+function DisplayEdit({displayText, label}) {
   //MUI state variables
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState();
 
-  const [editValue, setEditValue] = React.useState('')
+  const [oldValue, setOldValue] = useState('')
+  const [currValue, setCurrValue] = useState('')
+  const [newValue, setNewValue] = useState('')
+  const [displayValue, setDisplayValue] = useState('')
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   //MUI popper handle function
   const handleClick = (newPlacement) => (event) => {
@@ -29,27 +32,43 @@ function DisplayEdit({text, label}) {
     setPlacement(newPlacement);
   };
 
-/*   React.useEffect(() => {
-    if (editValue !== text && editValue !== '') {
-      const saveNewValue = async () => {
+  //Sets the given prop displayText as the initial value
+  useEffect(() => {
+    setOldValue(displayText)
+    setCurrValue(displayText)
+    setDisplayValue(displayText);
+  }, [displayText]);
+
+  // Sends a update request to server, with the old and new value (fetch works based on the given lable)
+  useEffect(() => {
+    if (currValue !== oldValue) {
+      const updateUserValue = async () => {
         const res = await fetch(`/user/update/${label}`, {
           method: "PUT",
-          body: `{ "old_${label}":"${text}", "new_${label}":"${editValue}"}`,
+          body: `{ "old_${label}": "${oldValue}", "new_${label}": "${currValue}" }`,
           headers: {
-            "Content-type": 'application/json'
+            "Content-type": 'application/json' 
           }
         })
         if (res.ok) {
-          setEditValue('')
-          navigate(0, { replace: true })
+          setDisplayValue(currValue) // Set accepted value to display and as new "oldValue"
+          setOldValue(currValue)
         }
       }
+      updateUserValue()
     }
-  
-    },[editValue, text, label, navigate]) */
+  }, [currValue, oldValue, label])
 
+  //Changes the displayed value to new given value
+  const handleSubmit = () => {
+    setCurrValue(newValue)
+    setNewValue('')
+    setOpen(false)
+  }
+
+  //Updates the new value state on change
   const handleTextChange = (event) => {
-    setEditValue(event.target.value)
+    setNewValue(event.target.value)
   }
 
   return (
@@ -64,8 +83,8 @@ function DisplayEdit({text, label}) {
           <Fade {...TransitionProps} timeout={350}>
             <Paper>
               <Stack p={1}>
-                <TextField label={`Insert new ${label}`} onChange={handleTextChange}></TextField>
-                <Button variant="contained" >Submit</Button>
+                <TextField label={`Insert new ${label}`} onChange={handleTextChange}>{newValue}</TextField>
+                <Button variant="contained" onClick={handleSubmit} >Submit</Button>
               </Stack>
             </Paper>
           </Fade>
@@ -76,7 +95,7 @@ function DisplayEdit({text, label}) {
         <Typography
           color='white'
         >
-          {text}
+          {displayValue}
         </Typography>
         <Button variant="contained" onClick={label === 'username'? handleClick('left-end') : handleClick('left-start')} >Edit</Button>
       </Stack>

@@ -52,7 +52,7 @@ function AcountInfo() {
         }
       } else {
         localStorage.removeItem('token')
-        navigate('/', { replace: true }) //If authorization went wrong, logout.
+        navigate(0, { replace: true })  //If authorization went wrong, logout.
       }
     } 
     fetchUserData()
@@ -105,11 +105,11 @@ function AcountInfo() {
           </Stack>
           <Stack  direction="column" width="100%" borderRadius='20px' padding='10px' style={{ backgroundColor: 'grey'}} >
             
-            <DisplayEdit text={username} label={'username'}/> {/* Editable user data */}
+            <DisplayEdit displayText={username} label={'username'}/> {/* Editable user data */}
             
             <Divider style={{ borderWidth: '2px', marginTop: '10px', marginBottom: '10px' }}/>
             
-            <DisplayEdit text={email} label={'email'}/> {/* Editable user data */}
+            <DisplayEdit displayText={email} label={'email'}/> {/* Editable user data */}
           
           </Stack>
         </Stack>  
