@@ -12,16 +12,16 @@ import TextField from '@mui/material/TextField';
 //RRD:
 //import { useNavigate } from 'react-router-dom'
 
-function DisplayEdit({displayText, label}) {
+function DisplayEdit({displayText, label}) { //("the display value", "what user data it is")
   //MUI state variables
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState();
 
-  const [oldValue, setOldValue] = useState('')
-  const [currValue, setCurrValue] = useState('')
-  const [newValue, setNewValue] = useState('')
-  const [displayValue, setDisplayValue] = useState('')
+  const [oldValue, setOldValue] = useState('') // old value
+  const [currValue, setCurrValue] = useState('') // new value to be evaluated by the server
+  const [newValue, setNewValue] = useState('') // input value, not yet pressed submit btn
+  const [displayValue, setDisplayValue] = useState('') // the value that is displayed currently
 
   //const navigate = useNavigate();
 
