@@ -75,10 +75,10 @@ function Login() {
       noValidate
       autoComplete="off"
       onSubmit={handleChangeOnSubmit}
-      style={{ display: 'flex', justifyContent: 'center' }}
+      style={{ width:'100%', display: 'flex', justifyContent: 'center' }}
       >
-        <div style={{margin: 110, maxWidth: '700px', flex: 'auto'}}>
-        <h1 style={{textAlign: "center"}}>Login!</h1>
+        <div style={{ margin: 110, maxWidth: '700px', flex: 'auto'}}>
+          <h1 style={{textAlign: "center"}}>Login!</h1>
           <Stack spacing={2} direction="column">
             <TextField
               id="outlined-input"

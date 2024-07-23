@@ -85,7 +85,7 @@ function AcountInfo() {
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <div className='container' style={{ flex: 'auto', maxWidth:'700px', padding: 70, margin: 30, backgroundColor: "#2196f3", borderRadius: '20px' }}>
-        <Stack direction="column" spacing={4} sx={{ alignItems: "center" }}>
+        <Stack direction="column" spacing={4} width={'100%'} sx={{ alignItems: "center" }}>
           <Stack direction='row' width="100%" display='flex' justifyContent='space-between' alignItems='center'>  
             <Avatar
               src={imageSrc}

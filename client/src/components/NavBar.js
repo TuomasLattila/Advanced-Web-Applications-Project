@@ -23,13 +23,14 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 //RRD:
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const pages = ['Start swiping', 'Chat'];
 const settings = ['Profile', 'Logout'];
 
 function Profile({ Component }) { //This component takes another component as param, and it is diplyed under the navbar.
   const navigate = useNavigate();
+  const location = useLocation()
 
   //Material ui hidden menus state variables:
   const [open, setOpen] = React.useState(false);
@@ -40,9 +41,13 @@ function Profile({ Component }) { //This component takes another component as pa
   };
 
   //Function for loging the user out.
-  const logUserOut = () => {
+  const logUserOut = () => { 
     localStorage.removeItem('token')
-    navigate(0, { replace: true }) // delete token and refresh the index page.
+    if (location.pathname === '/') {
+      navigate(0, { replace: true }) // delete token and refresh the index page.
+    } else {
+      navigate('/', { replace: true }) // navigate to index if not already there
+    }
   }
 
   const navigateToProfile = () => {
@@ -51,7 +56,7 @@ function Profile({ Component }) { //This component takes another component as pa
   const navigateToChat = () => {
     navigate('/chat') // Navigates to the chat page
   }
-  const navigateToSwiping = () => {
+  const navigateToSwiping = () => { 
     navigate('/swipe') // Navigates to the swipe page
   }
 
@@ -148,7 +153,7 @@ function Profile({ Component }) { //This component takes another component as pa
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (
-                <Button
+                <Button 
                   key={page}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                   onClick={page === "Chat"? navigateToChat : navigateToSwiping}  

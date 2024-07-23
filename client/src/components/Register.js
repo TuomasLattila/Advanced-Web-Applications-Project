@@ -78,7 +78,7 @@ function Register() {
       noValidate
       autoComplete="off"
       onSubmit={handleChangeOnSubmit}
-      style={{ display: 'flex', justifyContent: 'center' }}
+      style={{ width:'100%', display: 'flex', justifyContent: 'center' }}
       >
         <div style={{margin: 110, maxWidth: '700px', flex: 'auto'}}>
           <h1 style={{textAlign: "center"}}>Register!</h1>

@@ -21,8 +21,8 @@ function Frontpage() {
   }
 
   return (
-    <div className='container' style={{margin: 100}}>
-      <Stack spacing={2} direction="column">
+    <div className='container' style={{margin: 110, display: 'flex', justifyContent: 'center'}}>
+      <Stack spacing={2} direction="column" flex='auto' maxWidth='700px'>
         <Button LinkComponent={Link} id='register' to='/register' variant='contained'>Create account</Button>
         <Button LinkComponent={Link} id='login' to='/login' variant='outlined'>Log in</Button>
       </Stack>
