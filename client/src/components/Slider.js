@@ -26,7 +26,7 @@ const Slider = ({ children }) => {
       ...(x < 0 ? left : right),
       immediate: name => active && name === 'x',
     })
-  )
+  ) 
 
   const avSize = x.to({
     map: Math.abs,
@@ -34,6 +34,7 @@ const Slider = ({ children }) => {
     output: [0.5, 1],
     extrapolate: 'clamp',
   })
+
 
   return (
     <animated.div {...bind()} style={{ background: bg }}>

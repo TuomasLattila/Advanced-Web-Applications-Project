@@ -143,23 +143,4 @@ router.put('/update/email',
   }
 )
 
-router.get('/list',
-  passport.authenticate('jwt', { session: false }), 
-  async (req, res, next) => {
-    try {
-      const userList = await User.find({ email: { $ne: req.user.email } })
-      if (userList) {
-        let resList = [] 
-        userList.forEach(user => {
-          resList.push({ username: user.username, image: user.image })
-        });
-        res.json(resList) 
-      } else {
-        res.sendStatus(400) //Bad request
-      }
-    } catch (error) {
-      res.sendStatus(500) //Internal server error
-    }
-})
-
 module.exports = router;

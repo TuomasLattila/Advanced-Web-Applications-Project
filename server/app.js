@@ -7,9 +7,11 @@ const dotenv = require('dotenv')
 const cors = require('cors')
 dotenv.config()
 
+//Routers:
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
 var imagesRouter = require('./routes/images');
+var swipeRouter = require('./routes/swipe');
 
 var app = express();
 
@@ -39,5 +41,6 @@ if (process.env.NODE_ENV === "development") {
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/images', imagesRouter);
+app.use('/swipe', swipeRouter);
 
 module.exports = app;

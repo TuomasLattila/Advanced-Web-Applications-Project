@@ -101,7 +101,6 @@ function Profile({ Component }) { //This component takes another component as pa
               variant="h6"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
@@ -112,7 +111,7 @@ function Profile({ Component }) { //This component takes another component as pa
                 textDecoration: 'none',
               }}
             >
-              LOGO
+              {'<h1></h1>'}
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -137,7 +136,6 @@ function Profile({ Component }) { //This component takes another component as pa
               variant="h5"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
               sx={{
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
@@ -149,7 +147,7 @@ function Profile({ Component }) { //This component takes another component as pa
                 textDecoration: 'none',
               }}
             >
-              LOGO
+              {'<h1></h1>'}
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (

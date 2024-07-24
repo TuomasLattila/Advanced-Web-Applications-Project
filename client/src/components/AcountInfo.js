@@ -10,6 +10,7 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 
 //RRD:
 import { useNavigate } from 'react-router-dom'
@@ -86,6 +87,14 @@ function AcountInfo() {
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <div className='container' style={{ flex: 'auto', maxWidth:'700px', padding: 70, margin: 30, backgroundColor: "#2196f3", borderRadius: '20px' }}>
         <Stack direction="column" spacing={4} width={'100%'} sx={{ alignItems: "center" }}>
+          <Typography variant='h5' sx={{
+                mr: 2,
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}>Your profile</Typography>
           <Stack direction='row' width="100%" display='flex' justifyContent='space-between' alignItems='center'>  
             <Avatar
               src={imageSrc}
