@@ -22,9 +22,10 @@ router.post('/message', passport.authenticate('jwt', { session: false }),
         ts: Date.now()
       })
       await newMessage.save() 
-      io.emit('message', newMessage) 
+      //io.emit('message', newMessage)  FIX THIS!!!
       res.sendStatus(200)
     } catch (error) {
+      console.log(error)
       res.sendStatus(500)
     }
   }
@@ -34,7 +35,7 @@ router.get('/messages/:userID', passport.authenticate('jwt', { session: false })
   async (req, res, next) => {
     try {
       const messages = await Message.find({ $or: [{ from: req.user._id, to: req.params.userID }, { from: req.params.userID, to: req.user._id }] })
-      res.send(messages) // OK
+      res.send({username: req.user.username, messages: messages}) // OK
     } catch (error) {
       res.sendStatus(500)
     }
