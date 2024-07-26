@@ -7,13 +7,14 @@ const dotenv = require('dotenv')
 const cors = require('cors')
 dotenv.config()
 
+var app = express();
+
 //Routers:
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
 var imagesRouter = require('./routes/images');
 var swipeRouter = require('./routes/swipe');
-
-var app = express();
+var chatRouter = require('./routes/chat');
 
 //mongodb setup
 const mongodb = 'mongodb://127.0.0.1:27017/testdb';
@@ -31,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //cors setup:
 if (process.env.NODE_ENV === "development") {
   var corsOptions = {
-    origin: "http://localhost:3000",
+    origin: "http://localhost:3000", 
     optionsSuccessStatus: 200
   }
   app.use(cors(corsOptions))
@@ -42,5 +43,6 @@ app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/images', imagesRouter);
 app.use('/swipe', swipeRouter);
+app.use('/chat', chatRouter);
 
 module.exports = app;

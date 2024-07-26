@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+
+import { socket } from '../socket'
 
 //MUI Components
 import AppBar from '@mui/material/AppBar';
@@ -39,6 +41,13 @@ function Profile({ Component }) { //This component takes another component as pa
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
+
+  useEffect(() => {
+    if (location.pathname !== '/chat' && socket.connected) {
+      socket.disconnect()
+      console.log("user disconnected chat")
+    }
+  }, [location])
 
   //Function for loging the user out.
   const logUserOut = () => { 

@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('server:server');
 var http = require('http');
+const socketIo = require('../socket/io')
 
 /**
  * Get port from environment and store in Express.
@@ -20,6 +21,16 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+ 
+const io = socketIo.init(server)
+
+//User connection/disconnect for chat
+io.on('connection', (socket) => {
+  console.log('user connected')
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
+  })
+})
 
 /**
  * Listen on provided port, on all network interfaces.
