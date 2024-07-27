@@ -16,12 +16,13 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import NotInterestedIcon from '@mui/icons-material/NotInterested';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Box, collapseClasses, Container } from '@mui/material';
+import { Container } from '@mui/material';
 
 function Swiping() {
   const [userList, setUserList] = useState([]) // server returns list of swipeable users
   const [imageSrc, setImageSrc] = useState('')
   const [username, setUsername] = useState('')
+  const [bio, setBio] = useState('')
   const [noMoreNewUsers, setNoMoreNewUsers] = useState(false) //false if server returns list of user, and it's length is more than 0
 
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ function Swiping() {
             setNoMoreNewUsers(true)
             setImageSrc(null)
             setUsername('No more new users')
+            setBio('-')
           }
           setUserList(json)
         } else {
@@ -57,6 +59,7 @@ function Swiping() {
   useEffect(() => {
     if (userList.length !== 0) {
       setUsername(userList[0].username)
+      setBio(userList[0].description)
       if (userList[0].image !== null) {
         setImageSrc(`/images/${userList[0].image}`) 
       } else {
@@ -139,6 +142,11 @@ function Swiping() {
                     {username}
                     </Typography>
                     <Divider style={{ borderWidth: '2px', width: '100%'}}></Divider>
+                    <Typography
+                      color='black'
+                    >
+                    {bio}
+                    </Typography>
                   </Stack>
                 </div>
               </Slider>

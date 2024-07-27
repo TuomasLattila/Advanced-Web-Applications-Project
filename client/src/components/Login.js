@@ -9,10 +9,18 @@ import TextField from '@mui/material/TextField';
 //RRD:
 import { useNavigate } from 'react-router-dom';
 
+//Language:
+import { useTranslation } from 'react-i18next';
+
 function Login() {
+  const { t } = useTranslation(['translation'])
+
   const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const [fetchBoolean, setFetchBoolean] = useState(false) //False until form submits.
+
+  const [helperText, setHelperText] = useState('')
+  const [error, setError] = useState(false)
 
   const navigate = useNavigate()
  
@@ -38,6 +46,9 @@ function Login() {
           const json = await res.json()
           localStorage.setItem('token', json.token) //Store the jwt token to localStorege
           navigate('/', { replace: true }) //Navigate to index page, after succesfull login
+        } else if (res.status === 401) {
+          setHelperText('Incorrect email/username or password')
+          setError(true)
         }
       }
       loginUser()
@@ -58,10 +69,14 @@ function Login() {
 
   //2 functions for handling the value change in the inputfileds
   const handleIdentifierChange = (event) => {
+    setError(false)
+    setHelperText('')
     setIdentifier(event.target.value)
   }
 
   const handlePasswordChange = (event) => {
+    setError(false)
+    setHelperText('')
     setPassword(event.target.value)
   }
 
@@ -75,11 +90,12 @@ function Login() {
       style={{ width:'100%', display: 'flex', justifyContent: 'center' }}
       >
         <Stack sx={{ padding: { xs: '100px 30px', sm: '100px 50px', md: '100px 80px'} }} style={{ maxWidth: '700px', flex: 'auto'}}>
-          <h1 style={{textAlign: "center"}}>Login!</h1>
+          <h1 style={{textAlign: "center"}}>{t('Login!')}</h1>
           <Stack spacing={2} direction="column">
             <TextField
+              error={error}
               id="outlined-input"
-              label="Email/username"
+              label={t("Email/username")}
               type="text"
               autoComplete="current-email"
               name='identifier'
@@ -88,8 +104,10 @@ function Login() {
               required
             />
             <TextField
+              error={error}
+              helperText={t(helperText)}
               id="outlined-password-input"
-              label="Password"
+              label={t("Password")}
               type="password"
               autoComplete="current-password"
               name='password'
@@ -97,7 +115,7 @@ function Login() {
               onChange={handlePasswordChange}
               required
             />
-            <Button type='submit' id='register' variant='contained'>Log in</Button>
+            <Button type='submit' id='register' variant='contained'>{t('Log in')}</Button>
           </Stack>
         </Stack>
       </Box>

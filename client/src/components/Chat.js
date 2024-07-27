@@ -67,8 +67,8 @@ function Chat( { matchUser } ) {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <Stack direction={'column'} spacing={2} sx={{ flex: 'auto', padding: { xs: '5px', sm: '5px 30px', md: '10px 50px'}, maxWidth: '700px'}}>
-        <Stack direction={'row'}>
+      <Stack direction={'column'} spacing={2} sx={{ flex: 'auto', padding: { xs: '5px', sm: '10px 30px', md: '10px 50px'}, maxWidth: '700px'}}>
+        <Stack direction={'row'} sx={{ position: 'sticky', top: { xs: 66, sm: 74, md: 78.5 } }}>
           <Button onClick={handleBackBtn} variant='contained'>
             <ArrowBackIcon></ArrowBackIcon>
           </Button>
@@ -83,13 +83,13 @@ function Chat( { matchUser } ) {
                 <Stack direction={'row'} spacing={1}>
                   {msg.from === matchUser.id? <Avatar sx={{ height: { xs: 20, sm: 30, md: 40}, width: { xs: 20, sm: 30, md: 40}}} src={`/images/${matchUser.image}`}></Avatar> : null}
                   <Typography color={'yellow'}>{msg.from === matchUser.id? matchUser.username: 'You'}</Typography>
-                  <Typography fontSize={10}>{`${(new Date(msg.ts)).getDay()}/${(new Date(msg.ts)).getMonth()}/${(new Date(msg.ts)).getFullYear()} ${(new Date(msg.ts)).getHours().toString().padStart(2, 0)}:${(new Date(msg.ts)).getMinutes().toString().padStart(2, 0)}`}</Typography>
+                  <Typography fontSize={10}>{`${(new Date(msg.ts)).getDate()}/${(new Date(msg.ts)).getMonth()+1}/${(new Date(msg.ts)).getFullYear()} ${(new Date(msg.ts)).getHours().toString().padStart(2, 0)}:${(new Date(msg.ts)).getMinutes().toString().padStart(2, 0)}`}</Typography>
                 </Stack>
               </Stack>
             </Stack>
           ))}
         </Stack>
-        <Stack spacing={1} direction={'row'} position={'sticky'}>
+        <Stack spacing={1} direction={'row'} sx={{ position: 'sticky', bottom: 10 }} >
           <TextField
             label="New message"
             name='message'

@@ -37,7 +37,7 @@ const Slider = ({ children }) => {
 
 
   return (
-    <animated.div {...bind()} style={{ background: bg }}>
+    <animated.div {...bind()} style={{ background: bg, touchAction: 'none' }}>
       <animated.div style={{ scale: avSize, justifySelf }} />
       <animated.div style={{ x, scale }}>
         {children}

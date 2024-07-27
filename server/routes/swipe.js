@@ -24,7 +24,7 @@ router.get('/list',
       if (userList) {
         let resList = [] 
         userList.forEach(user => {
-          resList.push({ username: user.username, image: user.image, email: user.email }) // required information about the user
+          resList.push({ username: user.username, image: user.image, email: user.email, description: user.description }) // required information about the user
         });
         res.json(resList) // OK (respond with the list)
       } else {

@@ -9,11 +9,20 @@ import TextField from '@mui/material/TextField';
 //RRD:
 import { useNavigate } from 'react-router-dom';
 
+//Language:
+import { useTranslation } from 'react-i18next';
+
 function Register() {
+  const { t } = useTranslation(['translation'])
+
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fetchBoolean, setFetchBoolean] = useState(false) //False until form submits.
+
+  const [helperTextEmail, setHelperTextEmail] = useState('')
+  const [helperTextPassword, setHelperTextPassword] = useState('')
+  const [error, setError] = useState(false)
 
   const navigate = useNavigate()
 
@@ -36,6 +45,10 @@ function Register() {
         if (res.status === 200) {
           console.log("Rekisteröinti onnistui!")            
           navigate('/login', { replace: true, state: { msg: "MOI!" } }) //use navigate to replace page with login page.      
+        } else if (res.status === 400) {
+          setHelperTextEmail('Invalid email or password')
+          setHelperTextPassword('Min: 8 characters, 1 lower case, 1 upper case, 1 symbol')
+          setError(true)
         }
       }
       registerUser()
@@ -57,14 +70,23 @@ function Register() {
 
   //3 functions for handling the value change in the inputfileds
   const handleUsernameChange = (event) => {
+    setError(false)
+    setHelperTextEmail('')
+    setHelperTextPassword('')
     setUsername(event.target.value)
   }
 
   const handleEmailChange = (event) => {
+    setError(false)
+    setHelperTextEmail('')
+    setHelperTextPassword('')
     setEmail(event.target.value)
   }
 
   const handlePasswordChange = (event) => {
+    setError(false)
+    setHelperTextEmail('')
+    setHelperTextPassword('')
     setPassword(event.target.value)
   }
 
@@ -78,7 +100,7 @@ function Register() {
       style={{ width:'100%', display: 'flex', justifyContent: 'center' }}
       >
         <Stack sx={{ padding: { xs: '100px 30px', sm: '100px 50px', md: '100px 80px'} }} style={{ maxWidth: '700px', flex: 'auto'}}>
-          <h1 style={{textAlign: "center"}}>Register!</h1>
+          <h1 style={{textAlign: "center"}}>{t('Register!')}</h1>
           <div style={{
             display: 'flex',
             flexDirection: 'column',
@@ -87,15 +109,17 @@ function Register() {
           }}>
             <TextField
               id="outlined-input"
-              label="Type your username"
+              label={t("Type your username")}
               type="text"
               name='username'
               value={username}
               onChange={handleUsernameChange}
             />
             <TextField
+              error={error}
+              helperText={t(helperTextEmail)}
               id="outlined-email-input"
-              label="Type your email"
+              label={t("Type your email")}
               type="email"
               autoComplete="current-email"
               name='email'
@@ -104,8 +128,10 @@ function Register() {
               required
             />
             <TextField
+              error={error}
+              helperText={t(helperTextPassword)}
               id="outlined-password-input"
-              label="Type your password"
+              label={t("Type your password")}
               type="password"
               autoComplete="current-password"
               name='password'
@@ -115,7 +141,7 @@ function Register() {
             />
           </div>
           <Stack spacing={2} direction="column">
-            <Button type='submit' id='register' variant='contained'>Create account</Button>
+            <Button type='submit' id='register' variant='contained'>{t('Create account')}</Button>
           </Stack>
         </Stack>
       </Box>

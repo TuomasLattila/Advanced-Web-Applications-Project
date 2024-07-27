@@ -1,0 +1,16 @@
+{
+  "Create account": "Create account",
+  "Log in": "Log in",
+
+  "Register!": "Register!",
+  "Type your username": "Type your username",
+  "Type your email": "Type your email",
+  "Type your password": "Type your password",
+  "Invalid email or password": "Invalid email or password",
+  "Min: 8 characters, 1 lower case, 1 upper case, 1 symbol": "Min: 8 characters, 1 lower case, 1 upper case, 1 symbol",
+
+  "Login!": "Login!",
+  "Email/username": "Email/username",
+  "Password": "Password",
+  "Incorrect email/username or password": "Incorrect email/username or password"
+}

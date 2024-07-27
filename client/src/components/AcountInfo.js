@@ -70,7 +70,10 @@ function AcountInfo() {
     img.append('image', event.target.files[0]) 
     const imgRes = await fetch('/images', {
       method: "POST",
-      body: img
+      body: img,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
     })
     if (imgRes.ok) {
       const imgId = await imgRes.text()

@@ -1,0 +1,16 @@
+{
+  "Create account": "Luo tili",
+  "Log in": "Kirjaudu sisään",
+
+  "Register!": "Rekisteröidy!",
+  "Type your username": "Kirjoita käyttäjänimesi",
+  "Type your email": "Kirjoita sähköpostisi",
+  "Type your password": "Kirjoita salasanasi",
+  "Invalid email or password": "Virheellinen sähköposti tai salasana",
+  "Min: 8 characters, 1 lower case, 1 upper case, 1 symbol": "Min: 8 merkkiä, 1 pieni kirjain, 1 iso kirjain, 1 symbooli",
+
+  "Login!": "Kirjaudu!",
+  "Email/username": "Sähköposti/käyttäjänimi",
+  "Password": "Salasana",
+  "Incorrect email/username or password": "Virheellinen sähköposti/käyttäjänimi tai salasana"
+}
