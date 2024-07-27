@@ -7,43 +7,53 @@ import { Avatar, Button, Stack, Typography } from '@mui/material';
 //My components:
 import Chat from './Chat';
 
+//RRD:
+import { useNavigate } from 'react-router-dom'
+
 function ChatList() { 
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [userlist, setUserlist] = useState([])
   const [chatContent, setChatContent] = useState(false)
-  const [currChatUser, setCurrChatUser] = useState('')
+  const [matchUser, setMatchUser] = useState('')
+  const [currUserId, setCurrUserId] = useState('')
 
-  const fetchUserlist = async () => {
-    const res = await fetch('/chat/userlist', {
-      method: "GET",
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-    if (res.ok) {
-      const json = await res.json()
-      setUserlist(json)
-    }
-  }
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isConnected) {
+      const fetchUserlist = async () => {
+        const res = await fetch('/chat/userlist', {
+          method: "GET",
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+        if (res.ok) {
+          const json = await res.json()
+          setUserlist(json.userlist)
+          setCurrUserId(json.id)
+        } else {
+          localStorage.removeItem('token')
+          navigate('/', { replace: true })  //If authorization went wrong, logout.
+        }
+      }
+      fetchUserlist()
       socket.connect()
       setIsConnected(true)
       console.log('user connected to chat')
-      fetchUserlist()
     }
-  }, [isConnected])
+  }, [isConnected, navigate])
 
   const handleOpenChat = (user) => {
-    setCurrChatUser(user)
+    setMatchUser(user)
     setChatContent(true)
+    socket.emit('joinChatroom', {userId: currUserId, matchId: user.id})
   }
 
   return (
     <div>
       { chatContent?
-      (<Chat user={currChatUser}></Chat>)  
+      (<Chat matchUser={matchUser}></Chat>)  
       :
       (
         <Stack direction={'column'} spacing={2} padding={'50px'} textAlign={'center'}>

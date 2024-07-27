@@ -55,7 +55,7 @@ function Profile({ Component }) { //This component takes another component as pa
     if (location.pathname === '/') {
       navigate(0, { replace: true }) // delete token and refresh the index page.
     } else {
-      navigate('/', { replace: true }) // navigate to index if not already there
+      window.location.href = '/' //navigate('/', { replace: true }) // navigate to index if not already there
     }
   }
 

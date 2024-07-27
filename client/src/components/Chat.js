@@ -1,19 +1,29 @@
-import { Stack, Typography, TextField, Button } from '@mui/material'
+import { Stack, Typography, TextField, Button, Avatar } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-//import { socket } from '../socket'
+import { socket } from '../socket'
 
-function Chat( { user } ) {
+//MUI Components:
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
+//RRD:
+import { useNavigate } from 'react-router-dom'
+
+function Chat( { matchUser } ) {
   const [messageList, setMessageList] = useState([])
   const [messagesFetched, setMessagesFetched] = useState(false)
-  const [username, setUsername] = useState('')
 
   const [newMessage, setNewMessage] = useState('')
 
+  const navigate = useNavigate();
+
 
   useEffect(() => {
+    socket.on('message', (newMessage) => {
+      setMessageList([...messageList, newMessage])
+    })
     const fetchMessages = async () => {
       if (!messagesFetched) {
-        const res = await fetch(`chat/messages/${user.id}`, {
+        const res = await fetch(`chat/messages/${matchUser.id}`, {
           method: "GET",
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -22,13 +32,12 @@ function Chat( { user } ) {
         if (res.ok) {
           const json = await res.json()
           setMessageList(json.messages)
-          setUsername(json.username)
           setMessagesFetched(true)
         }
       }
     }
     fetchMessages()
-  }, [messagesFetched, user])
+  }, [messagesFetched, matchUser, messageList])
 
 
   const handleMsgChange = (event) => {
@@ -39,7 +48,7 @@ function Chat( { user } ) {
     const res = await fetch('/chat/message', {
       method: "POST",
       body: JSON.stringify({
-        to: user.id,
+        to: matchUser.id,
         msg: newMessage
       }),
       headers: {
@@ -52,17 +61,27 @@ function Chat( { user } ) {
     }
   }
 
+  const handleBackBtn = () => {
+    navigate(0, { replace: true }) //Reload to get back to matched users list (disconnects the room also)
+  }
+
   return (
     <div style={{ padding: '50px', display: 'flex', flexDirection: 'column' }}>
+      <Stack direction={'row'}>
+        <Button onClick={handleBackBtn} variant='contained'>
+          <ArrowBackIcon></ArrowBackIcon>
+        </Button>
+      </Stack>
       <Stack direction={'column'} spacing={2} sx={{ flex: 1, overflowY: 'auto'}}>
         {messageList.map((msg, index) => (
-          <Stack key={index} direction={'row'} justifyContent={msg.from === user.id? 'flex-start': 'flex-end'}>
-            <Stack sx={{ width: 'fit-content'}} maxWidth={'50%'} borderRadius={'5px'} padding={'5px'} direction={'column-reverse'} style={{ backgroundColor: '#2196f3' }}>
+          <Stack key={index} direction={'row'} justifyContent={msg.from === matchUser.id? 'flex-start': 'flex-end'}>
+            <Stack sx={{ width: 'fit-content'}} maxWidth={'50%'} borderRadius={'5px'} padding={'5px'} direction={'column-reverse'} style={msg.from === matchUser.id? { backgroundColor: '#2196f3' } : { backgroundColor: '#8bc34a' }}>
               <Stack direction={'row'}>
                 <Typography sx={{ wordBreak: "break-word" }}>{msg.msg}</Typography>
               </Stack>
               <Stack direction={'row'} spacing={1}>
-                <Typography color={'yellow'}>{msg.from === user.id? user.username: username}</Typography>
+                {msg.from === matchUser.id? <Avatar src={`/images/${matchUser.image}`}></Avatar> : null}
+                <Typography color={'yellow'}>{msg.from === matchUser.id? matchUser.username: 'You'}</Typography>
                 <Typography fontSize={10}>{`${(new Date(msg.ts)).getDay()}/${(new Date(msg.ts)).getMonth()}/${(new Date(msg.ts)).getFullYear()} ${(new Date(msg.ts)).getHours().toString().padStart(2, 0)}:${(new Date(msg.ts)).getMinutes().toString().padStart(2, 0)}`}</Typography>
               </Stack>
             </Stack>

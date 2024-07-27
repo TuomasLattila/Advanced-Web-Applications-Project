@@ -27,6 +27,15 @@ const io = socketIo.init(server)
 //User connection/disconnect for chat
 io.on('connection', (socket) => {
   console.log('user connected')
+  socket.on('joinChatroom', (data) => {
+    if (io.sockets.adapter.rooms.has(`${data.userId}+${data.matchId}`)) { //Check if room exists whit this user
+      socket.join(`${data.userId}+${data.matchId}`) //join existing room
+      console.log('joined existing room') 
+    } else {
+      socket.join(`${data.matchId}+${data.userId}`) // else create room for this user pair
+      console.log('joined own room') 
+    }
+  })
   socket.on('disconnect', () => {
     console.log('user disconnected')
   })
