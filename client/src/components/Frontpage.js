@@ -9,9 +9,6 @@ import AcountInfo from './AcountInfo';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
-//css:
-import '../css/Frontpage.css'
-
 //react-router-dom:
 import {Link} from 'react-router-dom'
  
@@ -21,8 +18,8 @@ function Frontpage() {
   }
 
   return (
-    <div className='container' style={{margin: 110, display: 'flex', justifyContent: 'center'}}>
-      <Stack spacing={2} direction="column" flex='auto' maxWidth='700px'>
+    <div className='container' style={{display: 'flex', justifyContent: 'center'}}>
+      <Stack spacing={2} direction="column" flex='auto' maxWidth='700px' sx={{ padding: { xs: '300px 30px', sm: '300px 50px', md: '300px 80px'} }}>
         <Button LinkComponent={Link} id='register' to='/register' variant='contained'>Create account</Button>
         <Button LinkComponent={Link} id='login' to='/login' variant='outlined'>Log in</Button>
       </Stack>

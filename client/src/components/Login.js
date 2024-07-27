@@ -6,9 +6,6 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-//css:
-import '../css/Login.css'
-
 //RRD:
 import { useNavigate } from 'react-router-dom';
 
@@ -77,7 +74,7 @@ function Login() {
       onSubmit={handleChangeOnSubmit}
       style={{ width:'100%', display: 'flex', justifyContent: 'center' }}
       >
-        <div style={{ margin: 110, maxWidth: '700px', flex: 'auto'}}>
+        <Stack sx={{ padding: { xs: '100px 30px', sm: '100px 50px', md: '100px 80px'} }} style={{ maxWidth: '700px', flex: 'auto'}}>
           <h1 style={{textAlign: "center"}}>Login!</h1>
           <Stack spacing={2} direction="column">
             <TextField
@@ -102,7 +99,7 @@ function Login() {
             />
             <Button type='submit' id='register' variant='contained'>Log in</Button>
           </Stack>
-        </div>
+        </Stack>
       </Box>
     </div>
   )

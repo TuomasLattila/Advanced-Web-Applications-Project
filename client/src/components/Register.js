@@ -6,9 +6,6 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-//css:
-import '../css/Register.css'
-
 //RRD:
 import { useNavigate } from 'react-router-dom';
 
@@ -80,7 +77,7 @@ function Register() {
       onSubmit={handleChangeOnSubmit}
       style={{ width:'100%', display: 'flex', justifyContent: 'center' }}
       >
-        <div style={{margin: 110, maxWidth: '700px', flex: 'auto'}}>
+        <Stack sx={{ padding: { xs: '100px 30px', sm: '100px 50px', md: '100px 80px'} }} style={{ maxWidth: '700px', flex: 'auto'}}>
           <h1 style={{textAlign: "center"}}>Register!</h1>
           <div style={{
             display: 'flex',
@@ -120,7 +117,7 @@ function Register() {
           <Stack spacing={2} direction="column">
             <Button type='submit' id='register' variant='contained'>Create account</Button>
           </Stack>
-        </div>
+        </Stack>
       </Box>
     </div>
   )

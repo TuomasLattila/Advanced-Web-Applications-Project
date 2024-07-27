@@ -14,6 +14,9 @@ import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import NotInterestedIcon from '@mui/icons-material/NotInterested';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Box, collapseClasses, Container } from '@mui/material';
 
 function Swiping() {
   const [userList, setUserList] = useState([]) // server returns list of swipeable users
@@ -113,32 +116,41 @@ function Swiping() {
       handleLike()
     }
   }
-
+  
   return (
-    <div style={{ display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'center', overflow: 'hidden' }}>
-      <div style={{margin: '200px', width: '100%', height: '100%', maxWidth: '360px'}}>
-        <Slider >
-          <div onPointerUp={noMoreNewUsers === false? handleSwipe : null} style={{ backgroundColor: "#2196f3", borderRadius: '10px', padding: '10px'}}>
-            <Stack direction='column' spacing={1} alignItems={'center'}>
-              <Avatar
-                  src={imageSrc}
-                  sx={{ width: 112, height: 112 }}
-                  style={{ pointerEvents: 'none' }}
-              />
-              <Typography
-                color='black'
-              >
-              {username}
-              </Typography>
-              <Divider style={{ borderWidth: '2px', width: '100%'}}></Divider>
+    <div style={{ alignItems: 'center', overflow: 'hidden', height: 'max-content' }}>
+      <Container maxWidth="xl">
+        <Stack direction={'row'} alignItems={'center'} justifyContent={'space-evenly'}>
+          <NotInterestedIcon style={{ color: 'red' }} sx={{ height: { xs: 30, sm: 40, md: 50}, width: { xs: 30, sm: 40, md: 50}}}></NotInterestedIcon>
+          <Stack direction={'column'} alignItems={'center'} marginTop={'100px'}>
+            <Typography variant='h6'>Swipe or click!</Typography>
+            <Stack direction={'column'} spacing={4} textAlign={'center'} sx={{ height: '100%', width: { xs: 170, sm: 250, md: 360}}}>
+              <Slider >
+                <div onPointerUp={noMoreNewUsers === false? handleSwipe : null} style={{ backgroundColor: "#2196f3", borderRadius: '10px', padding: '10px'}}>
+                  <Stack direction='column' spacing={1} alignItems={'center'}>
+                    <Avatar
+                        src={imageSrc}
+                        sx={{ width: 112, height: 112 }}
+                        style={{ pointerEvents: 'none' }}
+                    />
+                    <Typography
+                      color='black'
+                    >
+                    {username}
+                    </Typography>
+                    <Divider style={{ borderWidth: '2px', width: '100%'}}></Divider>
+                  </Stack>
+                </div>
+              </Slider>
+              <Stack marginTop={'15px'} direction={'row'} justifyContent='space-between'>
+                <Button id='dislike' onClick={noMoreNewUsers === false? handleDislike : null} variant='contained' style={{ backgroundColor: 'red' }}><ThumbDownIcon/></Button>
+                <Button id='like' onClick={noMoreNewUsers === false? handleLike : null} variant='contained' style={{ backgroundColor: 'green' }}><ThumbUpIcon/></Button>
+              </Stack>
             </Stack>
-          </div>
-        </Slider>
-        <Stack marginTop={'15px'} direction={'row'} justifyContent='space-between'>
-          <Button id='dislike' onClick={noMoreNewUsers === false? handleDislike : null} variant='contained' style={{ backgroundColor: 'red' }}><ThumbDownIcon/></Button>
-          <Button id='like' onClick={noMoreNewUsers === false? handleLike : null} variant='contained' style={{ backgroundColor: 'green' }}><ThumbUpIcon/></Button>
+          </Stack>
+          <FavoriteBorderIcon style={{ color: 'green' }} sx={{ height: { xs: 30, sm: 40, md: 50}, width: { xs: 30, sm: 40, md: 50}}}></FavoriteBorderIcon>
         </Stack>
-      </div>
+      </Container>
     </div>
   )
 }

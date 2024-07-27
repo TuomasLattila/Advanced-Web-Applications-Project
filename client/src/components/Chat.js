@@ -66,40 +66,42 @@ function Chat( { matchUser } ) {
   }
 
   return (
-    <div style={{ padding: '50px', display: 'flex', flexDirection: 'column' }}>
-      <Stack direction={'row'}>
-        <Button onClick={handleBackBtn} variant='contained'>
-          <ArrowBackIcon></ArrowBackIcon>
-        </Button>
-      </Stack>
-      <Stack direction={'column'} spacing={2} sx={{ flex: 1, overflowY: 'auto'}}>
-        {messageList.map((msg, index) => (
-          <Stack key={index} direction={'row'} justifyContent={msg.from === matchUser.id? 'flex-start': 'flex-end'}>
-            <Stack sx={{ width: 'fit-content'}} maxWidth={'50%'} borderRadius={'5px'} padding={'5px'} direction={'column-reverse'} style={msg.from === matchUser.id? { backgroundColor: '#2196f3' } : { backgroundColor: '#8bc34a' }}>
-              <Stack direction={'row'}>
-                <Typography sx={{ wordBreak: "break-word" }}>{msg.msg}</Typography>
-              </Stack>
-              <Stack direction={'row'} spacing={1}>
-                {msg.from === matchUser.id? <Avatar src={`/images/${matchUser.image}`}></Avatar> : null}
-                <Typography color={'yellow'}>{msg.from === matchUser.id? matchUser.username: 'You'}</Typography>
-                <Typography fontSize={10}>{`${(new Date(msg.ts)).getDay()}/${(new Date(msg.ts)).getMonth()}/${(new Date(msg.ts)).getFullYear()} ${(new Date(msg.ts)).getHours().toString().padStart(2, 0)}:${(new Date(msg.ts)).getMinutes().toString().padStart(2, 0)}`}</Typography>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <Stack direction={'column'} spacing={2} sx={{ flex: 'auto', padding: { xs: '5px', sm: '5px 30px', md: '10px 50px'}, maxWidth: '700px'}}>
+        <Stack direction={'row'}>
+          <Button onClick={handleBackBtn} variant='contained'>
+            <ArrowBackIcon></ArrowBackIcon>
+          </Button>
+        </Stack>
+        <Stack direction={'column'} spacing={2} sx={{ flex: 1, overflowY: 'auto'}}>
+          {messageList.map((msg, index) => (
+            <Stack key={index} direction={'row'} justifyContent={msg.from === matchUser.id? 'flex-start': 'flex-end'}>
+              <Stack sx={{ width: 'fit-content'}} maxWidth={'50%'} borderRadius={'5px'} padding={'5px'} direction={'column-reverse'} style={msg.from === matchUser.id? { backgroundColor: '#2196f3' } : { backgroundColor: '#8bc34a' }}>
+                <Stack direction={'row'}>
+                  <Typography sx={{ wordBreak: "break-word" }}>{msg.msg}</Typography>
+                </Stack>
+                <Stack direction={'row'} spacing={1}>
+                  {msg.from === matchUser.id? <Avatar sx={{ height: { xs: 20, sm: 30, md: 40}, width: { xs: 20, sm: 30, md: 40}}} src={`/images/${matchUser.image}`}></Avatar> : null}
+                  <Typography color={'yellow'}>{msg.from === matchUser.id? matchUser.username: 'You'}</Typography>
+                  <Typography fontSize={10}>{`${(new Date(msg.ts)).getDay()}/${(new Date(msg.ts)).getMonth()}/${(new Date(msg.ts)).getFullYear()} ${(new Date(msg.ts)).getHours().toString().padStart(2, 0)}:${(new Date(msg.ts)).getMinutes().toString().padStart(2, 0)}`}</Typography>
+                </Stack>
               </Stack>
             </Stack>
-          </Stack>
-        ))}
-      </Stack>
-      <Stack marginTop={2} spacing={1} direction={'row'} position={'sticky'}>
-        <TextField
-          label="New message"
-          name='message'
-          type='text'
-          value={newMessage}
-          onChange={handleMsgChange}
-          fullWidth
-        />
-        <Button onClick={handleSend} variant='contained'>
-        Send
-        </Button>
+          ))}
+        </Stack>
+        <Stack spacing={1} direction={'row'} position={'sticky'}>
+          <TextField
+            label="New message"
+            name='message'
+            type='text'
+            value={newMessage}
+            onChange={handleMsgChange}
+            fullWidth
+          />
+          <Button onClick={handleSend} variant='contained'>
+          Send
+          </Button>
+        </Stack>
       </Stack>
     </div>
   )

@@ -19,8 +19,10 @@ const passport = require('../strategy/auth')
 /* GET one user based based on given userid. */
 router.get('/data', passport.authenticate('jwt', { session: false }), function(req, res, next) {
   res.json({
+    id: req.user._id,
     username: req.user.username,
     email: req.user.email,
+    description: req.user.description,
     image: req.user.image
   });
 });
@@ -87,41 +89,45 @@ router.post('/login', async (req, res, next) => {
 })
 
 //This route replaces the old profile picture with new one, for given user. 
-router.put('/update/image', async (req, res, next) => {
-  try {
-    const foundUser = await User.findOne({ email: req.body.email })
-    if (foundUser) {
-      await Image.deleteOne({ _id: foundUser.image }) //Delete old picture
-      foundUser.image = req.body.imgId
-      await foundUser.save()
-      res.sendStatus(200) //OK (New profile picture saved.)
-    } else {
-      res.sendStatus(400)//Bad request (User was not found)
-    }
-  } catch (error) {
-    res.sendStatus(500) //Internal Server error (Something went wrong with the process)
-  } 
-})
+router.put('/update/image', passport.authenticate('jwt', { session: false }),
+  async (req, res, next) => {
+    try {
+      const foundUser = await User.findById(req.body.id)
+      if (foundUser) {
+        await Image.deleteOne({ _id: foundUser.image }) //Delete old picture
+        foundUser.image = req.body.imgId
+        await foundUser.save()
+        res.sendStatus(200) //OK (New profile picture saved.)
+      } else {
+        res.sendStatus(400)//Bad request (User was not found)
+      }
+    } catch (error) {
+      res.sendStatus(500) //Internal Server error (Something went wrong with the process)
+    } 
+  }
+)
 
 //This route updates the old username with new, if it doesent already exist
-router.put('/update/username', async (req, res, next) => {
-  try {
-    const foundOldUser = await User.findOne({ username: req.body.old_username })
-    const foundNewUser = await User.findOne({ username: req.body.new_username })
-    if (foundOldUser && !foundNewUser) {
-      foundOldUser.username = req.body.new_username
-      await foundOldUser.save()
-      res.sendStatus(200) //OK (New username saved.)
-    } else {
-      res.sendStatus(409) //Conflict (Username already exists)
+router.put('/update/username', passport.authenticate('jwt', { session: false }),
+  async (req, res, next) => {
+    try {
+      const foundOldUser = await User.findOne({ username: req.body.old_username })
+      const foundNewUser = await User.findOne({ username: req.body.new_username })
+      if (foundOldUser && !foundNewUser) {
+        foundOldUser.username = req.body.new_username
+        await foundOldUser.save()
+        res.sendStatus(200) //OK (New username saved.)
+      } else {
+        res.sendStatus(409) //Conflict (Username already exists)
+      }
+    } catch (error) {
+      res.sendStatus(500) //Internal Server error (Something went wrong with the process)
     }
-  } catch (error) {
-    res.sendStatus(500) //Internal Server error (Something went wrong with the process)
   }
-})
+)
 
 //This route updates the old email with new, if it doesent already exist and has email structure
-router.put('/update/email', 
+router.put('/update/email', passport.authenticate('jwt', { session: false }),
   body('new_email').isString().isEmail(),
   async (req, res, next) => {
     if (!validationResult(req).isEmpty()) {
@@ -138,6 +144,25 @@ router.put('/update/email',
         res.sendStatus(409) //Conflict (Email already exists)
       }
     } catch (error) {
+      res.sendStatus(500) //Internal Server error (Something went wrong with the process)
+    }
+  }
+)
+
+//This route updates the old description to new
+router.put('/update/description', passport.authenticate('jwt', { session: false }),
+   async (req, res, next) => {
+    try {
+      const foundUser = await User.findById(req.user._id)
+      if (foundUser) {
+        foundUser.description = req.body.new_description
+        await foundUser.save()
+        res.sendStatus(200) //OK (New description saved.)
+      } else {
+        res.sendStatus(400) //Bad request (User not found)
+      }
+    } catch (error) {
+      console.log(error)
       res.sendStatus(500) //Internal Server error (Something went wrong with the process)
     }
   }

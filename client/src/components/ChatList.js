@@ -56,26 +56,28 @@ function ChatList() {
       (<Chat matchUser={matchUser}></Chat>)  
       :
       (
-        <Stack direction={'column'} spacing={2} padding={'50px'} textAlign={'center'}>
-          <Typography variant='h4'>Mathed users:</Typography>
-          {userlist.map((user, index) => (
-            <Stack key={index} direction={'row'} alignItems={'center'} justifyContent='space-between'
-              style={{ backgroundColor: '#2196f3', borderRadius: '5px', padding: '10px'}}
-            >
-              <Stack direction={'row'} spacing={4} alignItems={'center'}>
-                <Avatar
-                  src={`/images/${user.image}`}
-                ></Avatar>
-                <Typography>
-                  {user.username}
-                </Typography>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Stack direction={'column'} spacing={2} padding={'50px'} textAlign={'center'} maxWidth={'700px'} flex={'auto'}>
+            <Typography variant='h4'>Mathed users:</Typography>
+            {userlist.map((user, index) => (
+              <Stack key={index} direction={'row'} alignItems={'center'} justifyContent='space-between'
+                style={{ backgroundColor: '#2196f3', borderRadius: '5px', padding: '10px'}}
+              >
+                <Stack direction={'row'} spacing={4} alignItems={'center'}>
+                  <Avatar
+                    src={`/images/${user.image}`}
+                  ></Avatar>
+                  <Typography>
+                    {user.username}
+                  </Typography>
+                </Stack>
+                <Button onClick={() => handleOpenChat(user)} variant='contained'>
+                  Chat
+                </Button>
               </Stack>
-              <Button onClick={() => handleOpenChat(user)} variant='contained'>
-                Chat
-              </Button>
-            </Stack>
-          ))}
-        </Stack>
+            ))}
+          </Stack>
+        </div>
       )
       }
     </div>   

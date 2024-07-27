@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 
 //RRD:
 import { useNavigate } from 'react-router-dom'
+import { Container } from '@mui/material';
 
 //MUI file upload button
 const VisuallyHiddenInput = styled('input')({
@@ -29,8 +30,10 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 function AcountInfo() {
+  const [userId, setUserId] = useState('')
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
+  const [description, setDescription] = useState('')
   const [imageSrc, setImageSrc] = useState('')
 
   const navigate = useNavigate();
@@ -40,14 +43,16 @@ function AcountInfo() {
     const fetchUserData = async () => {
       const res = await fetch('/user/data', {
         method: "GET",
-        headers: {
+        headers: { 
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       })
       if (res.ok) {
         const json = await res.json()
+        setUserId(json.id)
         setUsername(json.username)
         setEmail(json.email)
+        setDescription(json.description)
         if (json.image !== null){
           setImageSrc(`/images/${json.image}`) //set profile picture imageSrc
         }
@@ -72,9 +77,10 @@ function AcountInfo() {
       console.log(email) 
       const res = await fetch('/user/update/image', {
         method: "PUT",
-        body: `{"email": "${email}", "imgId": ${imgId}}`,
+        body: `{"id": "${userId}", "imgId": ${imgId}}`,
         headers: {
-          "Content-type": 'application/json' 
+          "Content-type": 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         })
       if (res.ok) {
@@ -84,10 +90,11 @@ function AcountInfo() {
   }
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <div className='container' style={{ flex: 'auto', maxWidth:'700px', padding: 70, margin: 30, backgroundColor: "#2196f3", borderRadius: '20px' }}>
-        <Stack direction="column" spacing={4} width={'100%'} sx={{ alignItems: "center" }}>
-          <Typography variant='h5' sx={{
+    <div>
+      <Container maxWidth={'xl'}>
+        <div style={{ width:'100%', display: 'flex', justifyContent: 'center', marginTop: '100px' }}>
+          <Stack spacing={4} direction={'column'} alignItems={'center'} flex={'auto'} sx={{ backgroundColor:'#90caf9', padding: '10px', borderRadius: '10px', margin: {sx: '50px', md: '0px 50px', lg: '0px 100px'}, maxWidth: '700px' }}>
+            <Typography variant='h5' sx={{
                 mr: 2,
                 fontFamily: 'monospace',
                 fontWeight: 700,
@@ -95,34 +102,42 @@ function AcountInfo() {
                 color: 'inherit',
                 textDecoration: 'none',
               }}>Your profile</Typography>
-          <Stack direction='row' width="100%" display='flex' justifyContent='space-between' alignItems='center'>  
-            <Avatar
-              src={imageSrc}
-              sx={{ width: 112, height: 112 }}
-            />
-            <Button
-              component="label"
-              role={undefined}
-              variant="contained"
-              tabIndex={-1}
-              startIcon={<CloudUploadIcon />}
-              sx={{ width: 164, height: 40 }}
-            >
-              Change image
-              <VisuallyHiddenInput type="file" accept='image/*' onChange={handleImageChange} />
-            </Button>
+            <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} width={'90%'}>
+                <Avatar
+                  src={imageSrc}
+                  sx={{ height: { xs: 60, sm: 80, md: 100}, width: { xs: 60, sm: 80, md: 100} }}
+                />
+                 <Button
+                    component="label"
+                    role={undefined}
+                    variant="contained"
+                    tabIndex={-1}
+                    startIcon={<CloudUploadIcon />}
+                    sx={{ height: { xs: 30, sm: 30, md: 30}, width: { xs: 100, sm: 100, md: 100} }}
+                  >
+                    Upload
+                    <VisuallyHiddenInput type="file" accept='image/*' onChange={handleImageChange} />
+                  </Button>
+            </Stack>
+            <Stack direction={'column'} justifyContent={'space-between'} width={'90%'} sx={{ backgroundColor: '#3f51b5', padding: '10px', borderRadius: '10px' }}>
+              <label style={{ fontWeight: 'bold' }} htmlFor='username'>Username:</label>
+              <div id='username'>
+                <DisplayEdit displayText={username} label={'username'}/>
+              </div>
+              <Divider style={{ borderWidth: '2px', marginTop: '10px', marginBottom: '10px' }}/>
+              <label style={{ fontWeight: 'bold' }} htmlFor='email'>Email:</label>
+              <div id='email'>
+                <DisplayEdit displayText={email} label={'email'}/>
+              </div>
+              <Divider style={{ borderWidth: '2px', marginTop: '10px', marginBottom: '10px' }}/>
+              <label style={{ fontWeight: 'bold' }} htmlFor='bio'>Bio:</label>
+              <div id='bio'>
+                <DisplayEdit displayText={description} label={'description'}/>
+              </div>
+            </Stack>
           </Stack>
-          <Stack  direction="column" width="100%" borderRadius='20px' padding='10px' style={{ backgroundColor: 'grey'}} >
-            
-            <DisplayEdit displayText={username} label={'username'}/> {/* Editable user data */}
-            
-            <Divider style={{ borderWidth: '2px', marginTop: '10px', marginBottom: '10px' }}/>
-            
-            <DisplayEdit displayText={email} label={'email'}/> {/* Editable user data */}
-          
-          </Stack>
-        </Stack>  
-      </div>
+        </div>
+      </Container>
     </div>
   )
 }

@@ -47,7 +47,8 @@ function DisplayEdit({displayText, label}) { //("the display value", "what user 
           method: "PUT",
           body: `{ "old_${label}": "${oldValue}", "new_${label}": "${currValue}" }`,
           headers: {
-            "Content-type": 'application/json' 
+            "Content-type": 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}` 
           }
         })
         if (res.ok) {
