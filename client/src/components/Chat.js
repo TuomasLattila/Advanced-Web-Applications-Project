@@ -1,5 +1,5 @@
 import { Stack, Typography, TextField, Button, Avatar } from '@mui/material'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { socket } from '../socket'
 
 //MUI Components:
@@ -16,6 +16,7 @@ function Chat( { matchUser } ) {
 
   const [messageList, setMessageList] = useState([])
   const [messagesFetched, setMessagesFetched] = useState(false)
+  const lastMessageRef = useRef(null)
 
   const [newMessage, setNewMessage] = useState('')
 
@@ -25,6 +26,7 @@ function Chat( { matchUser } ) {
   useEffect(() => {
     socket.on('message', (newMessage) => {
       setMessageList([...messageList, newMessage])
+      lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' })
     })
     const fetchMessages = async () => {
       if (!messagesFetched) {
@@ -42,6 +44,7 @@ function Chat( { matchUser } ) {
       }
     }
     fetchMessages()
+    lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messagesFetched, matchUser, messageList])
 
 
@@ -91,6 +94,7 @@ function Chat( { matchUser } ) {
                   <Typography fontSize={10}>{`${(new Date(msg.ts)).getDate()}/${(new Date(msg.ts)).getMonth()+1}/${(new Date(msg.ts)).getFullYear()} ${(new Date(msg.ts)).getHours().toString().padStart(2, 0)}:${(new Date(msg.ts)).getMinutes().toString().padStart(2, 0)}`}</Typography>
                 </Stack>
               </Stack>
+              <div ref={lastMessageRef}></div>
             </Stack>
           ))}
         </Stack>
