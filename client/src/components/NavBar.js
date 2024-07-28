@@ -27,15 +27,25 @@ import LogoutIcon from '@mui/icons-material/Logout';
 //RRD:
 import { useNavigate, useLocation } from 'react-router-dom'
 
+//Language:
+import { useTranslation } from 'react-i18next';
+
 const pages = ['Start swiping', 'Chat'];
 const settings = ['Profile', 'Logout'];
+const languages = ['FI', 'EN']
 
 function Profile({ Component }) { //This component takes another component as param, and it is diplyed under the navbar.
+  const { t, i18n } = useTranslation(['translation'])
+  
   const navigate = useNavigate();
   const location = useLocation()
 
   //Material ui hidden menus state variables:
   const [open, setOpen] = React.useState(false);
+
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language)
+  }
 
   //Material ui functions to handle hidden menus
   const toggleDrawer = (newOpen) => () => {
@@ -79,7 +89,7 @@ function Profile({ Component }) { //This component takes another component as pa
               <ListItemIcon>
                 {text === "Start swiping"? <FavoriteBorderIcon /> : <ChatIcon />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={t(text)} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -92,6 +102,17 @@ function Profile({ Component }) { //This component takes another component as pa
               <ListItemIcon>
               {text === "Profile"? <AccountBoxIcon /> : <LogoutIcon />}
               </ListItemIcon>
+              <ListItemText primary={t(text)} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        <Typography fontWeight={'bold'}>Language:</Typography>
+        {languages.map((text) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton onClick={() => changeLanguage(text === 'FI'? 'fi' : 'en')}>
               <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
@@ -165,7 +186,7 @@ function Profile({ Component }) { //This component takes another component as pa
                   sx={{ my: 2, color: 'white', display: 'block' }}
                   onClick={page === "Chat"? navigateToChat : navigateToSwiping}  
                 >
-                  {page}
+                  {t(page)}
                 </Button>
               ))}
             </Box>
@@ -176,7 +197,18 @@ function Profile({ Component }) { //This component takes another component as pa
                   sx={{ my: 2, color: 'white', display: 'block' }}
                   onClick={setting === "Profile"? navigateToProfile : logUserOut}
                 >
-                  {setting}
+                  {t(setting)}
+                </Button>
+              ))}
+            </Box>
+            <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
+              {languages.map((language) => (
+                <Button
+                  key={language}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  onClick={() => changeLanguage(language === 'FI'? 'fi' : 'en')}
+                >
+                  {language}
                 </Button>
               ))}
             </Box>

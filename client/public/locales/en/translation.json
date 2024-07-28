@@ -12,5 +12,29 @@
   "Login!": "Login!",
   "Email/username": "Email/username",
   "Password": "Password",
-  "Incorrect email/username or password": "Incorrect email/username or password"
+  "Incorrect email/username or password": "Incorrect email/username or password",
+
+  "Start swiping":"Start swiping",
+  "Chat": "Chat",
+  "Your profile": "Your profile",
+  "Upload": "Upload",
+  "Username": "Username",
+  "Email": "Email",
+  "Bio": "Bio",
+  "Edit": "Edit",
+  "Logout": "Logout",
+  "Profile": "Profile",
+  "Insert new username": "Insert new username",
+  "Insert new email": "Insert new email",
+  "Insert new description": "Insert new description",
+  "Submit": "Submit",
+
+  "Swipe or click": "Swipe or click",
+  "No more new users": "No more new users",
+
+  "Matched users": "Matched users",
+
+  "Send": "Send",
+  "You": "You",
+  "New message": "New message"
 }

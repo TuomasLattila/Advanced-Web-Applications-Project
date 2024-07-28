@@ -18,7 +18,12 @@ import NotInterestedIcon from '@mui/icons-material/NotInterested';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Container } from '@mui/material';
 
+//Language:
+import { useTranslation } from 'react-i18next';
+
 function Swiping() {
+  const { t } = useTranslation(['translation'])
+
   const [userList, setUserList] = useState([]) // server returns list of swipeable users
   const [imageSrc, setImageSrc] = useState('')
   const [username, setUsername] = useState('')
@@ -126,7 +131,7 @@ function Swiping() {
         <Stack direction={'row'} alignItems={'center'} justifyContent={'space-evenly'}>
           <NotInterestedIcon style={{ color: 'red' }} sx={{ height: { xs: 30, sm: 40, md: 50}, width: { xs: 30, sm: 40, md: 50}}}></NotInterestedIcon>
           <Stack direction={'column'} alignItems={'center'} marginTop={'100px'}>
-            <Typography variant='h6'>Swipe or click!</Typography>
+            <Typography variant='h6'>{t('Swipe or click')}!</Typography>
             <Stack direction={'column'} spacing={4} textAlign={'center'} sx={{ height: '100%', width: { xs: 170, sm: 250, md: 360}}}>
               <Slider >
                 <div onPointerUp={noMoreNewUsers === false? handleSwipe : null} style={{ backgroundColor: "#2196f3", borderRadius: '10px', padding: '10px'}}>
@@ -139,7 +144,7 @@ function Swiping() {
                     <Typography
                       color='black'
                     >
-                    {username}
+                    {username !== 'No more new users'? username : t(username)}
                     </Typography>
                     <Divider style={{ borderWidth: '2px', width: '100%'}}></Divider>
                     <Typography

@@ -12,5 +12,29 @@
   "Login!": "Kirjaudu!",
   "Email/username": "Sähköposti/käyttäjänimi",
   "Password": "Salasana",
-  "Incorrect email/username or password": "Virheellinen sähköposti/käyttäjänimi tai salasana"
+  "Incorrect email/username or password": "Virheellinen sähköposti/käyttäjänimi tai salasana",
+
+  "Start swiping":"Swaippaile",
+  "Chat": "Keskustele",
+  "Your profile": "Sinun profiilisi",
+  "Upload": "Lataa",
+  "Username": "Käyttäjänimi",
+  "Email": "Sähköposti",
+  "Bio": "Bio",
+  "Edit": "Vaihda",
+  "Logout": "Kirjaudu ulos",
+  "Profile": "Profiili",
+  "Insert new username": "Uusi käyttäjänimi",
+  "Insert new email": "Uusi sähköposti",
+  "Insert new description": "Uusi bio",
+  "Submit": "Lähetä",
+
+  "Swipe or click": "Swaippaa tai klikkaa",
+  "No more new users": "Ei enempää uusia käyttäjiä",
+
+  "Matched users": "Mätsänneet käyttäjät",
+
+  "Send": "Lähetä",
+  "You": "Sinä",
+  "New message": "Uusi viesti"
 }

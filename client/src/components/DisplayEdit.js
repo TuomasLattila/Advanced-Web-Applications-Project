@@ -9,10 +9,12 @@ import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 
-//RRD:
-//import { useNavigate } from 'react-router-dom'
+//Language:
+import { useTranslation } from 'react-i18next';
 
 function DisplayEdit({displayText, label}) { //("the display value", "what user data it is")
+  const { t } = useTranslation(['translation'])
+  
   //MUI state variables
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
@@ -84,8 +86,8 @@ function DisplayEdit({displayText, label}) { //("the display value", "what user 
           <Fade {...TransitionProps} timeout={350}>
             <Paper>
               <Stack p={1}>
-                <TextField label={`Insert new ${label}`} onChange={handleTextChange}>{newValue}</TextField>
-                <Button variant="contained" onClick={handleSubmit} >Submit</Button>
+                <TextField label={t(`Insert new ${label}`)} onChange={handleTextChange}>{newValue}</TextField>
+                <Button variant="contained" onClick={handleSubmit} >{t('Submit')}</Button>
               </Stack>
             </Paper>
           </Fade>
@@ -98,7 +100,7 @@ function DisplayEdit({displayText, label}) { //("the display value", "what user 
         >
           {displayValue}
         </Typography>
-        <Button variant="contained" onClick={label === 'username'? handleClick('left-end') : handleClick('left-start')} >Edit</Button>
+        <Button variant="contained" onClick={label === 'username'? handleClick('left-end') : (label === 'email'? handleClick('left') : handleClick('left-start')) } >{t('Edit')}</Button>
       </Stack>
     </div>
   )

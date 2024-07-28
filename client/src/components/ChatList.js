@@ -10,7 +10,12 @@ import Chat from './Chat';
 //RRD:
 import { useNavigate } from 'react-router-dom'
 
+//Language:
+import { useTranslation } from 'react-i18next';
+
 function ChatList() { 
+  const { t } = useTranslation(['translation'])
+
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [userlist, setUserlist] = useState([])
   const [chatContent, setChatContent] = useState(false)
@@ -58,7 +63,7 @@ function ChatList() {
       (
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <Stack direction={'column'} spacing={2} padding={'50px'} textAlign={'center'} maxWidth={'700px'} flex={'auto'}>
-            <Typography variant='h4'>Mathed users:</Typography>
+            <Typography variant='h4'>{t('Matched users')}:</Typography>
             {userlist.map((user, index) => (
               <Stack key={index} direction={'row'} alignItems={'center'} justifyContent='space-between'
                 style={{ backgroundColor: '#2196f3', borderRadius: '5px', padding: '10px'}}
@@ -72,7 +77,7 @@ function ChatList() {
                   </Typography>
                 </Stack>
                 <Button onClick={() => handleOpenChat(user)} variant='contained'>
-                  Chat
+                  {t('Chat')}
                 </Button>
               </Stack>
             ))}

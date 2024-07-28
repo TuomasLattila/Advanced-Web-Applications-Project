@@ -8,7 +8,12 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 //RRD:
 import { useNavigate } from 'react-router-dom'
 
+//Language:
+import { useTranslation } from 'react-i18next';
+
 function Chat( { matchUser } ) {
+  const { t } = useTranslation(['translation'])
+
   const [messageList, setMessageList] = useState([])
   const [messagesFetched, setMessagesFetched] = useState(false)
 
@@ -82,7 +87,7 @@ function Chat( { matchUser } ) {
                 </Stack>
                 <Stack direction={'row'} spacing={1}>
                   {msg.from === matchUser.id? <Avatar sx={{ height: { xs: 20, sm: 30, md: 40}, width: { xs: 20, sm: 30, md: 40}}} src={`/images/${matchUser.image}`}></Avatar> : null}
-                  <Typography color={'yellow'}>{msg.from === matchUser.id? matchUser.username: 'You'}</Typography>
+                  <Typography color={'yellow'}>{msg.from === matchUser.id? matchUser.username: t('You')}</Typography>
                   <Typography fontSize={10}>{`${(new Date(msg.ts)).getDate()}/${(new Date(msg.ts)).getMonth()+1}/${(new Date(msg.ts)).getFullYear()} ${(new Date(msg.ts)).getHours().toString().padStart(2, 0)}:${(new Date(msg.ts)).getMinutes().toString().padStart(2, 0)}`}</Typography>
                 </Stack>
               </Stack>
@@ -91,7 +96,7 @@ function Chat( { matchUser } ) {
         </Stack>
         <Stack spacing={1} direction={'row'} sx={{ position: 'sticky', bottom: 10 }} >
           <TextField
-            label="New message"
+            label={t("New message")}
             name='message'
             type='text'
             value={newMessage}
@@ -99,7 +104,7 @@ function Chat( { matchUser } ) {
             fullWidth
           />
           <Button onClick={handleSend} variant='contained'>
-          Send
+          {t('Send')}
           </Button>
         </Stack>
       </Stack>

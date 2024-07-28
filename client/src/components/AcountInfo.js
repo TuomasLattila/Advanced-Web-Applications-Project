@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react'
 //Components:
 import DisplayEdit from './DisplayEdit';
 
+//Language:
+import { useTranslation } from 'react-i18next';
+
 //MUI:
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
@@ -30,6 +33,8 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 function AcountInfo() {
+  const { t } = useTranslation(['translation'])
+
   const [userId, setUserId] = useState('')
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -104,7 +109,7 @@ function AcountInfo() {
                 letterSpacing: '.3rem',
                 color: 'inherit',
                 textDecoration: 'none',
-              }}>Your profile</Typography>
+              }}>{t('Your profile')}</Typography>
             <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} width={'90%'}>
                 <Avatar
                   src={imageSrc}
@@ -118,28 +123,28 @@ function AcountInfo() {
                     startIcon={<CloudUploadIcon />}
                     sx={{ height: { xs: 30, sm: 30, md: 30}, width: { xs: 100, sm: 100, md: 100} }}
                   >
-                    Upload
+                    {t('Upload')}
                     <VisuallyHiddenInput type="file" accept='image/*' onChange={handleImageChange} />
                   </Button>
             </Stack>
             <Stack direction={'column'} justifyContent={'space-between'} width={'90%'} sx={{ backgroundColor: '#3f51b5', padding: '10px', borderRadius: '10px' }}>
-              <label style={{ fontWeight: 'bold' }} htmlFor='username'>Username:</label>
+              <label style={{ fontWeight: 'bold' }} htmlFor='username'>{t('Username')}:</label>
               <div id='username'>
                 <DisplayEdit displayText={username} label={'username'}/>
               </div>
               <Divider style={{ borderWidth: '2px', marginTop: '10px', marginBottom: '10px' }}/>
-              <label style={{ fontWeight: 'bold' }} htmlFor='email'>Email:</label>
+              <label style={{ fontWeight: 'bold' }} htmlFor='email'>{t('Email')}:</label>
               <div id='email'>
                 <DisplayEdit displayText={email} label={'email'}/>
               </div>
               <Divider style={{ borderWidth: '2px', marginTop: '10px', marginBottom: '10px' }}/>
-              <label style={{ fontWeight: 'bold' }} htmlFor='bio'>Bio:</label>
+              <label style={{ fontWeight: 'bold' }} htmlFor='bio'>{t('Bio')}:</label>
               <div id='bio'>
                 <DisplayEdit displayText={description} label={'description'}/>
               </div>
             </Stack>
           </Stack>
-        </div>
+        </div> 
       </Container>
     </div>
   )
