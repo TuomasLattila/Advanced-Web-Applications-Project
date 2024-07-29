@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
+
+//client side socet, used to keep chat messages updated in real-time
 import { socket } from '../socket'
 
 //MUI Components:
-import { Avatar, Button, Pagination, Stack, Typography } from '@mui/material';
+import { Avatar, Button, Pagination, Stack, Typography,  } from '@mui/material';
 import MessageIcon from '@mui/icons-material/Message';
 
 //My components:
@@ -11,26 +13,28 @@ import Chat from './Chat';
 //RRD:
 import { useNavigate } from 'react-router-dom'
 
-//Language:
+//Language module:
 import { useTranslation } from 'react-i18next';
 
 function ChatList() { 
-  const { t } = useTranslation(['translation'])
+  const { t } = useTranslation(['translation']) //translation
 
-  const [isConnected, setIsConnected] = useState(socket.connected);
-  const [userlist, setUserlist] = useState([])
-  const [currTenUsers, setCurrTenUsers] = useState([])
-  const [chatContent, setChatContent] = useState(false)
-  const [matchUser, setMatchUser] = useState('')
-  const [currUserId, setCurrUserId] = useState('')
-  const [pagerCount, setPagerCount] = useState(1)
+  const [isConnected, setIsConnected] = useState(socket.connected); // when true, the socket is connected to server io
+  const [userlist, setUserlist] = useState([]) //all matched users
+  const [currTenUsers, setCurrTenUsers] = useState([]) //currently displayed 10 or less users (pager keeps max 10 users displyed per page)
+  const [chatContent, setChatContent] = useState(false) //if true return chat UI, if false return chatList UI
+  const [matchUser, setMatchUser] = useState('') //this has the match user info, which is passed to the Chat component as prop
+  const [currUserId, setCurrUserId] = useState('') //this is the current clients id (used for the chat room joining)
+  const [pagerCount, setPagerCount] = useState(1) //the number of required pages on the pager (for example if 20 matched users, need 2 pages)
  
-  const navigate = useNavigate();
+  const navigate = useNavigate(); //navigation between pages
+
   //const testList = [{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol2', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol3', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, },{username: 'lol', image: null, }]
 
+  //fetches matched users
   useEffect(() => {
-    if (!isConnected) {
-      const fetchUserlist = async () => {
+    if (!isConnected) { //check if socket is not connected
+      const fetchUserlist = async () => { 
         const res = await fetch('/chat/userlist', {
           method: "GET",
           headers: {
@@ -39,7 +43,7 @@ function ChatList() {
         })
         if (res.ok) {
           const json = await res.json()
-          setUserlist(json.userlist)
+          setUserlist(json.userlist) //set users and pager data:
           setPagerCount(Math.ceil(json.userlist.length/10))
           setCurrUserId(json.id)
           setCurrTenUsers(json.userlist.slice(0, (json.userlist.length > 10? 10:json.userlist.length)))
@@ -49,33 +53,36 @@ function ChatList() {
         }
       }
       fetchUserlist()
-      socket.connect()
-      setIsConnected(true)
+      socket.connect() // connect the socket to server
+      setIsConnected(true) //connected true
       console.log('user connected to chat')
     }
   }, [isConnected, navigate])
 
+  //handles the chat opening. (sets the correct user and sets chat open to true)
   const handleOpenChat = (user) => {
     setMatchUser(user)
     setChatContent(true)
-    socket.emit('joinChatroom', {userId: currUserId, matchId: user.id})
+    socket.emit('joinChatroom', {userId: currUserId, matchId: user.id}) //sends server io 'joinChatroom', which creates room or joins existing room (done in server side)
   }
 
+  //handles pager page change
   const handlePagerChange = (event) => {
-    const pageIndex = (Number(event.target.innerHTML[0]) - 1)
-    const page = Number(event.target.innerHTML[0])
-    setCurrTenUsers([])
-    for (let i = (10*pageIndex); i < (10*page); i++) {
-      if (userlist[i] === undefined) {
+    const page = Number(event.target.innerHTML[0]) //get the page number from element 
+    const pageIndex = (page - 1) //page - 1 (index)
+
+    setCurrTenUsers([]) //remove currently displayed users
+    for (let i = (10*pageIndex); i < (10*page); i++) { //set the loop start index and end index correctly to get the right set of users for this page
+      if (userlist[i] === undefined) { // if less than 10 users, break the loop
         break
       }
-      setCurrTenUsers((prevUsers) => [...prevUsers, userlist[i]])
+      setCurrTenUsers((prevUsers) => [...prevUsers, userlist[i]]) //sets new user to be displyed
     }
   }
 
-  return (
+  return ( //uses Material UI components and normal react components and my own components
     <div>
-      { chatContent?
+      { chatContent? //cheks if user has opened a chat or not
       (<Chat matchUser={matchUser}></Chat>)  
       :
       (

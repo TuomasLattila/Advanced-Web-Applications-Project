@@ -1,40 +1,35 @@
 import React, { useState, useEffect } from 'react'
 
-//Components:
+//Slider component:
 import Slider from './Slider'
 
 //RRD:
 import { useNavigate } from 'react-router-dom'
 
 //MUI components:
-import Stack from '@mui/material/Stack'
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
+import { Stack, Avatar, Button, Divider, Typography, Container } from '@mui/material'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import NotInterestedIcon from '@mui/icons-material/NotInterested';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Container } from '@mui/material';
 
-//Language:
+//Language module:
 import { useTranslation } from 'react-i18next';
 
 function Swiping() {
-  const { t } = useTranslation(['translation'])
+  const { t } = useTranslation(['translation']) //translation
 
-  const [userList, setUserList] = useState([]) // server returns list of swipeable users
-  const [imageSrc, setImageSrc] = useState('')
-  const [username, setUsername] = useState('')
-  const [bio, setBio] = useState('')
+  const [userList, setUserList] = useState([]) // server returns list of swipeable users (all users that have not been liked/disliked yet by the current client)
+  const [imageSrc, setImageSrc] = useState('') // currently displayed user's image src
+  const [username, setUsername] = useState('') // currently displayed user's username
+  const [bio, setBio] = useState('') // currently displayed user's bio 
   const [noMoreNewUsers, setNoMoreNewUsers] = useState(false) //false if server returns list of user, and it's length is more than 0
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); //navigation between pages
 
-  // fetch the new swipeable users
+  // fetch the new swipeable users list
   useEffect(() => {
-    if (userList.length === 0 && noMoreNewUsers === false) {
+    if (userList.length === 0 && noMoreNewUsers === false) { //if list empty and could still be new users to fetch
       const fetchUsers = async () => {
         const res = await fetch('/swipe/list', { 
           method: 'GET',
@@ -45,12 +40,12 @@ function Swiping() {
         if (res.ok) {
           const json = await res.json()
           if (json.length === 0) { // test if the userlist is empty
-            setNoMoreNewUsers(true)
+            setNoMoreNewUsers(true) //set 'no more new users left'
             setImageSrc(null)
             setUsername('No more new users')
             setBio('-')
           }
-          setUserList(json)
+          setUserList(json) //set the fetched list to be displyed
         } else {
           localStorage.removeItem('token') 
           navigate('/', { replace: true })  //If authorization went wrong, logout.
@@ -89,7 +84,7 @@ function Swiping() {
     if (res.ok) {
       console.log('liked')
     }
-    setUserList(userList.slice(1))
+    setUserList(userList.slice(1)) //remove the swiped user from the list
   }
 
   //Send request to add like/dislike to server
@@ -108,13 +103,13 @@ function Swiping() {
     if (res.ok) {
       console.log('disliked')
     }
-    setUserList(userList.slice(1))
+    setUserList(userList.slice(1)) //remove the swiped user from the list
   }
 
   // Handles the swipe. Calculates the breakpoint, which over the swipe has to go. Then handles either like or dislike
   const handleSwipe = (event) => {
-    const windowWidth = window.innerWidth - 15
-    const cardWidth = (windowWidth-400 <= 360? windowWidth-400: 360)
+    const windowWidth = window.innerWidth
+    const cardWidth = (windowWidth < 600? 170 : (windowWidth < 900? 250 : 360))
     const leftBreakPoint = ((windowWidth - cardWidth) / 4)
     const rightBreakPoint = windowWidth -((windowWidth - cardWidth) / 4)
 
@@ -125,7 +120,7 @@ function Swiping() {
     }
   }
   
-  return (
+  return ( //uses Material UI components and normal react components
     <div style={{ alignItems: 'center', overflow: 'hidden', height: 'max-content' }}>
       <Container maxWidth="xl">
         <Stack direction={'row'} alignItems={'center'} justifyContent={'space-evenly'}>
@@ -134,7 +129,7 @@ function Swiping() {
             <Typography variant='h6'>{t('Swipe or click')}!</Typography>
             <Stack direction={'column'} spacing={4} textAlign={'center'} sx={{ height: '100%', width: { xs: 170, sm: 250, md: 360}}}>
               <Slider >
-                <div onPointerUp={noMoreNewUsers === false? handleSwipe : null} style={{ backgroundColor: "#2196f3", borderRadius: '10px', padding: '10px'}}>
+                <div onPointerUp={noMoreNewUsers === false? handleSwipe : handleSwipe} style={{ backgroundColor: "#2196f3", borderRadius: '10px', padding: '10px'}}>
                   <Stack direction='column' spacing={1} alignItems={'center'}>
                     <Avatar
                         src={imageSrc}

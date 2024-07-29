@@ -22,22 +22,22 @@ app.set('port', port);
 
 var server = http.createServer(app);
  
-const io = socketIo.init(server)
+const io = socketIo.init(server) //initialize the io
 
-//User connection/disconnect for chat
+//User connection/disconnect to chat
 io.on('connection', (socket) => {
-  console.log('user connected')
-  socket.on('joinChatroom', (data) => {
+  console.log('user connected to chat')
+  socket.on('joinChatroom', (data) => { //user started chat with some match
     if (io.sockets.adapter.rooms.has(`${data.userId}+${data.matchId}`)) { //Check if room exists whit this user
       socket.join(`${data.userId}+${data.matchId}`) //join existing room
-      console.log('joined existing room') 
+      console.log('joined existing chat room') 
     } else {
-      socket.join(`${data.matchId}+${data.userId}`) // else create room for this user pair
-      console.log('joined own room') 
+      socket.join(`${data.matchId}+${data.userId}`) // else join/create room for this user pair
+      console.log('joined own chat room') 
     }
   })
   socket.on('disconnect', () => {
-    console.log('user disconnected')
+    console.log('user disconnected from chat')
   })
 })
 

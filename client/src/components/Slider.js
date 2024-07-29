@@ -1,4 +1,5 @@
 //Code from react-spring's website that is modified a litle for the slider:
+//essentially this is the slider component, which is used in the swipe page, so the client can swipe users like in real tinder
 
 import React from 'react'
 import { useSpring, animated } from '@react-spring/web'

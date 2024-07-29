@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from 'react'
 
-//Components:
+//Own components:
 import DisplayEdit from './DisplayEdit';
 
-//Language:
+//Language module:
 import { useTranslation } from 'react-i18next';
 
-//MUI:
-import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
+//MUI Components:
 import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
+import { Container, Stack, Avatar, Button, Divider, Typography } from '@mui/material';
 
 //RRD:
 import { useNavigate } from 'react-router-dom'
-import { Container } from '@mui/material';
 
 //MUI file upload button
 const VisuallyHiddenInput = styled('input')({
@@ -33,17 +28,17 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 function AcountInfo() {
-  const { t } = useTranslation(['translation'])
+  const { t } = useTranslation(['translation']) //translation
 
-  const [userId, setUserId] = useState('')
+  //profile info:
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [description, setDescription] = useState('')
   const [imageSrc, setImageSrc] = useState('')
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); //for navigation between pages
 
-  //useEffect fetches the loged in user's data (image, username and email), when page loaded
+  //useEffect fetches the logged in user's data (image, username, bio and email), when page loaded
   useEffect(() => {
     const fetchUserData = async () => {
       const res = await fetch('/user/data', {
@@ -54,26 +49,25 @@ function AcountInfo() {
       })
       if (res.ok) {
         const json = await res.json()
-        setUserId(json.id)
-        setUsername(json.username)
+        setUsername(json.username) //set user info:
         setEmail(json.email)
         setDescription(json.description)
         if (json.image !== null){
-          setImageSrc(`/images/${json.image}`) //set profile picture imageSrc
+          setImageSrc(`/images/${json.image}`) //set profile picture imageSrc, if not null
         }
       } else {
         localStorage.removeItem('token')
-        navigate(0, { replace: true })  //If authorization went wrong, logout.
+        navigate(0, { replace: true })  //If authorization went wrong, delete token and logout.
       }
     } 
     fetchUserData()
   }, [navigate])
 
-  //Handles the image upload to the server and setting the image id to correct user
+  //Handles the image upload to the server and setting the image id to correct user (userimage change)
   const handleImageChange = async (event) => {
     const img = new FormData()
     img.append('image', event.target.files[0]) 
-    const imgRes = await fetch('/images', {
+    const imgRes = await fetch('/images', { //send new image to be saved in the DB
       method: "POST",
       body: img,
       headers: {
@@ -82,22 +76,21 @@ function AcountInfo() {
     })
     if (imgRes.ok) {
       const imgId = await imgRes.text()
-      console.log(email) 
-      const res = await fetch('/user/update/image', {
+      const res = await fetch('/user/update/image', { // set new image id to correct user, and delete old picture
         method: "PUT",
-        body: `{"id": "${userId}", "imgId": ${imgId}}`,
+        body: `{"imgId": ${imgId}}`,
         headers: {
           "Content-type": 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         })
       if (res.ok) {
-        navigate(0, { replace: true })
+        navigate(0, { replace: true }) // refresh to fetch the new image
       }
     }
   }
 
-  return (
+  return ( //uses Material UI components and normal react components and my own components
     <div>
       <Container maxWidth={'xl'}>
         <div style={{ width:'100%', display: 'flex', justifyContent: 'center', marginTop: '100px' }}>

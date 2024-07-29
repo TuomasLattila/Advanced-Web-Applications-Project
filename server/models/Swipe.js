@@ -9,4 +9,4 @@ const swipeSchema = new schema({
     disliked: { type: Boolean, default: false } 
 })
 
-module.exports = mongoose.model("Swipe", swipeSchema);
+module.exports = mongoose.model("Swipe", swipeSchema); //This model is for saving likes and dislikes (swipe)

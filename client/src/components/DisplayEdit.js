@@ -1,31 +1,23 @@
 import React, {useState, useEffect} from 'react'
 
-//MUI:
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Popper from '@mui/material/Popper';
-import Fade from '@mui/material/Fade';
-import Paper from '@mui/material/Paper';
-import TextField from '@mui/material/TextField';
+//MUI components:
+import { Stack, Typography, Button, Popper, Fade, Paper, TextField } from '@mui/material';
 
-//Language:
+//Language module:
 import { useTranslation } from 'react-i18next';
 
-function DisplayEdit({displayText, label}) { //("the display value", "what user data it is")
-  const { t } = useTranslation(['translation'])
+function DisplayEdit({displayText, label}) { //("the display value", "what user data it is"), for example ('Kimmo', 'username')
+  const { t } = useTranslation(['translation']) //translation
   
-  //MUI state variables
+  //MUI state variables for the popper
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState();
 
-  const [oldValue, setOldValue] = useState('') // old value
+  const [oldValue, setOldValue] = useState('') // old displayText
   const [currValue, setCurrValue] = useState('') // new value to be evaluated by the server
   const [newValue, setNewValue] = useState('') // input value, not yet pressed submit btn
   const [displayValue, setDisplayValue] = useState('') // the value that is displayed currently
-
-  //const navigate = useNavigate();
 
   //MUI popper handle function
   const handleClick = (newPlacement) => (event) => {
@@ -41,13 +33,13 @@ function DisplayEdit({displayText, label}) { //("the display value", "what user 
     setDisplayValue(displayText);
   }, [displayText]);
 
-  // Sends a update request to server, with the old and new value (fetch works based on the given lable)
+  // Sends an update request to server, with the old and new value (fetch works based on the given lable)
   useEffect(() => {
     if (currValue !== oldValue) {
       const updateUserValue = async () => {
         const res = await fetch(`/user/update/${label}`, {
           method: "PUT",
-          body: `{ "old_${label}": "${oldValue}", "new_${label}": "${currValue}" }`,
+          body: `{ "old_${label}": "${oldValue}", "new_${label}": "${currValue}" }`, //new value will be validated in the server and changed if validation OK
           headers: {
             "Content-type": 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('token')}` 
@@ -62,11 +54,11 @@ function DisplayEdit({displayText, label}) { //("the display value", "what user 
     }
   }, [currValue, oldValue, label])
 
-  //Changes the displayed value to new given value
+  //Handle submit, set input as current value, which will be sent to server
   const handleSubmit = () => {
     setCurrValue(newValue)
-    setNewValue('')
-    setOpen(false)
+    setNewValue('') //empty input field
+    setOpen(false) //close popper
   }
 
   //Updates the new value state on change
@@ -74,7 +66,7 @@ function DisplayEdit({displayText, label}) { //("the display value", "what user 
     setNewValue(event.target.value)
   }
 
-  return (
+  return ( //uses Material UI components and normal react components
     <div>
       <Popper
         open={open}

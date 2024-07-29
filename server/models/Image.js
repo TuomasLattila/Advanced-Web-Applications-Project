@@ -8,4 +8,4 @@ const imageSchema = new schema({
     encoding: String
 })
 
-module.exports = mongoose.model("Image", imageSchema);
+module.exports = mongoose.model("Image", imageSchema); //This model is for saving the user profile picture

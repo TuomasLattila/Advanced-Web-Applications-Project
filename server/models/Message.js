@@ -9,4 +9,4 @@ const messageSchema = new schema({
     ts: Date
 })
 
-module.exports = mongoose.model("Message", messageSchema);
+module.exports = mongoose.model("Message", messageSchema); //This model is for saving the messages 

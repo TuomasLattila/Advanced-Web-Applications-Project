@@ -10,4 +10,4 @@ const userSchema = new schema({
   image: { type: mongodb.ObjectId, required: false}
 })
 
-module.exports = mongoose.model('User', userSchema)  
+module.exports = mongoose.model('User', userSchema) //This model is for saving registered users

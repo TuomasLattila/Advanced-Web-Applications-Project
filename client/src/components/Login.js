@@ -1,34 +1,31 @@
 import React, { useState, useEffect } from 'react'
 
-//MUI:
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+//MUI components:
+import { Stack, Button, Box, TextField } from '@mui/material';
 
 //RRD:
 import { useNavigate } from 'react-router-dom';
 
-//Language:
+//Language module:
 import { useTranslation } from 'react-i18next';
 
 function Login() {
-  const { t } = useTranslation(['translation'])
+  const { t } = useTranslation(['translation']) //translation
 
-  const [identifier, setIdentifier] = useState('')
-  const [password, setPassword] = useState('')
+  const [identifier, setIdentifier] = useState('') //login email/username
+  const [password, setPassword] = useState('') //login password
   const [fetchBoolean, setFetchBoolean] = useState(false) //False until form submits.
 
-  const [helperText, setHelperText] = useState('')
-  const [error, setError] = useState(false)
+  const [helperText, setHelperText] = useState('') //gets set if login fails
+  const [error, setError] = useState(false) //true if login fails
 
-  const navigate = useNavigate()
+  const navigate = useNavigate() //navigation between pages
  
   //useEffect should run only when identifier, password and fetchBoolean states are changed.
   useEffect(() => {
     if (fetchBoolean === true) {
       setFetchBoolean(false) //Set false, so that the fetch won't after every change
-      const loginUser = async () => { //Async arrow function for making register request.
+      const loginUser = async () => { //Async arrow function for making login request.
         const res = await fetch('/user/login', {
           method: "POST",
           body: JSON.stringify({
@@ -40,14 +37,14 @@ function Login() {
           }
         }) 
         if (res.status === 200) {
-          console.log("Kirjautuminen onnistui!")
-          setIdentifier('')
+          console.log("Login success!")
+          setIdentifier('') //empty input fields
           setPassword('')
           const json = await res.json()
           localStorage.setItem('token', json.token) //Store the jwt token to localStorege
           navigate('/', { replace: true }) //Navigate to index page, after succesfull login
         } else if (res.status === 401) {
-          setHelperText('Incorrect email/username or password')
+          setHelperText('Incorrect email/username or password') //display error to user
           setError(true)
         }
       }
@@ -57,7 +54,7 @@ function Login() {
 
   //This arrow function runs when the form element is submitted. It changes the state variables.
   const handleChangeOnSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault() //prevent form default function
     const elements = event.target.elements
     setIdentifier(elements.identifier.value)
     setPassword(elements.password.value)
@@ -67,9 +64,9 @@ function Login() {
     }
   }
 
-  //2 functions for handling the value change in the inputfileds
+  //2 functions for handling the value change in the input fileds:
   const handleIdentifierChange = (event) => {
-    setError(false)
+    setError(false) //when correcting information, set errror and helper text off
     setHelperText('')
     setIdentifier(event.target.value)
   }
@@ -80,7 +77,7 @@ function Login() {
     setPassword(event.target.value)
   }
 
-  return (
+  return (//uses Material UI components and normal react components
     <div className='container'> 
       <Box
       component="form"

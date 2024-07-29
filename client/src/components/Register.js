@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-//MUI:
+//MUI components:
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -9,22 +9,22 @@ import TextField from '@mui/material/TextField';
 //RRD:
 import { useNavigate } from 'react-router-dom';
 
-//Language:
+//Language module:
 import { useTranslation } from 'react-i18next';
 
 function Register() {
-  const { t } = useTranslation(['translation'])
+  const { t } = useTranslation(['translation']) //translation
 
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('') //register username
+  const [email, setEmail] = useState('') //register email
+  const [password, setPassword] = useState('') //register password
   const [fetchBoolean, setFetchBoolean] = useState(false) //False until form submits.
 
-  const [helperTextEmail, setHelperTextEmail] = useState('')
-  const [helperTextPassword, setHelperTextPassword] = useState('')
-  const [error, setError] = useState(false)
+  const [helperTextEmail, setHelperTextEmail] = useState('') //helpertext if register error
+  const [helperTextPassword, setHelperTextPassword] = useState('') //helpertext if register error
+  const [error, setError] = useState(false) //true if register error
 
-  const navigate = useNavigate()
+  const navigate = useNavigate() //navigation between pages
 
   //useEffect should run only when at least email, password and fetchBoolean states are changed.
   useEffect(() => {
@@ -43,10 +43,10 @@ function Register() {
           }
         }) 
         if (res.status === 200) {
-          console.log("Rekisteröinti onnistui!")            
-          navigate('/login', { replace: true, state: { msg: "MOI!" } }) //use navigate to replace page with login page.      
+          console.log("Registration success!")            
+          navigate('/login', { replace: true }) //use navigate to replace page with login page.      
         } else if (res.status === 400) {
-          setHelperTextEmail('Invalid email or password')
+          setHelperTextEmail('Invalid email or password') //set helper texts and error, if register failed
           setHelperTextPassword('Min: 8 characters, 1 lower case, 1 upper case, 1 symbol')
           setError(true)
         }
@@ -57,9 +57,9 @@ function Register() {
 
   //This arrow function runs when the form element is submitted. It changes the states.
   const handleChangeOnSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault() //prevent default form function
     const elements = event.target.elements
-    setUsername(elements.username.value)
+    setUsername(elements.username.value) //set values from input fields
     setEmail(elements.email.value)
     setPassword(elements.password.value)
 
@@ -70,7 +70,7 @@ function Register() {
 
   //3 functions for handling the value change in the inputfileds
   const handleUsernameChange = (event) => {
-    setError(false)
+    setError(false) // set error and helper texts off after change
     setHelperTextEmail('')
     setHelperTextPassword('')
     setUsername(event.target.value)
@@ -90,7 +90,7 @@ function Register() {
     setPassword(event.target.value)
   }
 
-  return (
+  return ( //uses Material UI components and normal react components
     <div className='container'> 
       <Box
       component="form"

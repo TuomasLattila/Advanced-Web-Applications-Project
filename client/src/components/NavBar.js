@@ -1,24 +1,12 @@
 import React, { useEffect } from 'react'
 
+//client side socet
 import { socket } from '../socket'
 
 //MUI Components
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+import { AppBar, Box, Toolbar, IconButton, Typography, Container, Button, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
 import AdbIcon from '@mui/icons-material/Adb';
-import Drawer from '@mui/material/Drawer';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ChatIcon from '@mui/icons-material/Chat';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
@@ -27,31 +15,33 @@ import LogoutIcon from '@mui/icons-material/Logout';
 //RRD:
 import { useNavigate, useLocation } from 'react-router-dom'
 
-//Language:
+//Language module:
 import { useTranslation } from 'react-i18next';
 
+//Button texts:
 const pages = ['Start swiping', 'Chat'];
 const settings = ['Profile', 'Logout'];
 const languages = ['FI', 'EN']
 
 function Profile({ Component }) { //This component takes another component as param, and it is diplyed under the navbar.
-  const { t, i18n } = useTranslation(['translation'])
+  const { t, i18n } = useTranslation(['translation']) //translation and language change
   
-  const navigate = useNavigate();
-  const location = useLocation()
+  const navigate = useNavigate(); //navigation between pages
+  const location = useLocation() //gives the current location data
 
-  //Material ui hidden menus state variables:
+  //Material ui hidden menus state variable:
   const [open, setOpen] = React.useState(false);
 
-  const changeLanguage = (language) => {
+  const changeLanguage = (language) => { //handles language change
     i18n.changeLanguage(language)
   }
 
-  //Material ui functions to handle hidden menus
+  //Material ui function to handle hidden menu open/close
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 
+  //handle socket disconnect from server io
   useEffect(() => {
     if (location.pathname !== '/chat' && socket.connected) {
       socket.disconnect()
@@ -65,12 +55,13 @@ function Profile({ Component }) { //This component takes another component as pa
     if (location.pathname === '/') {
       navigate(0, { replace: true }) // delete token and refresh the index page.
     } else {
-      window.location.href = '/' //navigate('/', { replace: true }) // navigate to index if not already there
+      window.location.href = '/' // navigate to index if not already there
     }
   }
 
+  //3 navigation functions to change page
   const navigateToProfile = () => {
-    navigate('/', { replace: true }) // Refreshes, because this is profile page
+    navigate('/', { replace: true }) // Navigates to profile page
   }
   const navigateToChat = () => {
     navigate('/chat') // Navigates to the chat page
@@ -79,7 +70,7 @@ function Profile({ Component }) { //This component takes another component as pa
     navigate('/swipe') // Navigates to the swipe page
   }
 
-  //This is the sidebar that opens when hamburger icon is pressed on smaller screens.
+  //This is the sidebar that opens when hamburger icon is pressed on smaller screen sizes.
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
@@ -121,7 +112,7 @@ function Profile({ Component }) { //This component takes another component as pa
     </Box>
   );
 
-  return (
+  return ( //uses Material UI components and normal react components
     <div>
       <AppBar position="sticky">
         <Container maxWidth="xl">
