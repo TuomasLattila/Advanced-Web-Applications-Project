@@ -16,7 +16,7 @@ function Login() {
   const [password, setPassword] = useState('') //login password
   const [fetchBoolean, setFetchBoolean] = useState(false) //False until form submits.
 
-  const [helperText, setHelperText] = useState('') //gets set if login fails
+  const [helperText, setHelperText] = useState() //gets set if login fails
   const [error, setError] = useState(false) //true if login fails
 
   const navigate = useNavigate() //navigation between pages
@@ -67,13 +67,13 @@ function Login() {
   //2 functions for handling the value change in the input fileds:
   const handleIdentifierChange = (event) => {
     setError(false) //when correcting information, set errror and helper text off
-    setHelperText('')
+    setHelperText()
     setIdentifier(event.target.value)
   }
 
   const handlePasswordChange = (event) => {
     setError(false)
-    setHelperText('')
+    setHelperText()
     setPassword(event.target.value)
   }
 

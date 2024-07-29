@@ -20,8 +20,8 @@ function Register() {
   const [password, setPassword] = useState('') //register password
   const [fetchBoolean, setFetchBoolean] = useState(false) //False until form submits.
 
-  const [helperTextEmail, setHelperTextEmail] = useState('') //helpertext if register error
-  const [helperTextPassword, setHelperTextPassword] = useState('') //helpertext if register error
+  const [helperTextEmail, setHelperTextEmail] = useState() //helpertext if register error
+  const [helperTextPassword, setHelperTextPassword] = useState() //helpertext if register error
   const [error, setError] = useState(false) //true if register error
 
   const navigate = useNavigate() //navigation between pages
@@ -71,22 +71,22 @@ function Register() {
   //3 functions for handling the value change in the inputfileds
   const handleUsernameChange = (event) => {
     setError(false) // set error and helper texts off after change
-    setHelperTextEmail('')
-    setHelperTextPassword('')
+    setHelperTextEmail()
+    setHelperTextPassword()
     setUsername(event.target.value)
   }
 
   const handleEmailChange = (event) => {
     setError(false)
-    setHelperTextEmail('')
-    setHelperTextPassword('')
+    setHelperTextEmail()
+    setHelperTextPassword()
     setEmail(event.target.value)
   }
 
   const handlePasswordChange = (event) => {
     setError(false)
-    setHelperTextEmail('')
-    setHelperTextPassword('')
+    setHelperTextEmail()
+    setHelperTextPassword()
     setPassword(event.target.value)
   }
 
