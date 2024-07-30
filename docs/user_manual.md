@@ -28,6 +28,9 @@ The main features of the app are liking/disliking (swiping) other users, and if 
 
 ## Accessibility report
 
+![Näyttökuva 2024-07-30 154925](https://github.com/user-attachments/assets/cd413070-db69-4a13-a08b-0b6659df956b)
+
+
 
 
 Over all apps accessibility is ok.
