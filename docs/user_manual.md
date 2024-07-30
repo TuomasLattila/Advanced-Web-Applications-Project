@@ -21,7 +21,7 @@ The navigation in the app happens through the navbar, which is on top of the scr
 
 ## Swiping and chatting features:
 
-![Näyttökuva 2024-07-30 154857](https://github.com/user-attachments/assets/ee7515a1-2277-484b-aef8-5a5bbb9ec856)
+![Näyttökuva 2024-07-30 154908](https://github.com/user-attachments/assets/a0ba7898-142d-42a1-923e-f16f887aa661)
 
 
 The main features of the app are liking/disliking (swiping) other users, and if two users have both liked each other (match), they can start chatting with each other. The left picture displays the swiping feature. It displays one new user at a time and the client can like or dislike the user. Liking can happen by pressing the green thumb up button, or by swiping the user card to right. Disliking happens the same way but to left. After swiping, a new user gets displayed, until no more new users to swipe, as shown on the picture. The middle picture displays a list of matched users, and by pressing the chat button on a matched user, you get directed to the chat with the specific user. The chat is displayed on the right picture. User can write new messages, send them, and go back to the matched users list by pressing the arrow button, on the top left.
