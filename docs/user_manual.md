@@ -5,7 +5,7 @@ Here is briefly explained the application features and how to use them.
 
 ![Näyttökuva 2024-07-30 154750](https://github.com/user-attachments/assets/75695597-a28d-4534-a3d1-53dd2fccb209)
 
-To use this app user must authenticate by log in to an account. User has options to either log into an already existing account or he/she can create a new account by registering. Registering needs user’s username, email, and password. Email needs to be actual email type (aaa.bbb@ccc.dd), and the password needs to be at least 8 characters long, it needs to have at least 1 upper case letter, 1 lower case letter, 1 number, and 1 symbol. After successful register, user is directed to login page, where he/she can log in to the new account. Also, the language can be changed in the front page between English and Finnish.
+To use this app user must authenticate by logging in to an account. User has options to either log into an already existing account or he/she can create a new account by registering. Registering needs user’s username, email, and password. Email needs to be actual email type (aaa.bbb@ccc.dd), and the password needs to be at least 8 characters long, it needs to have at least 1 upper case letter, 1 lower case letter, 1 number, and 1 symbol. After successful register, user is directed to login page, where he/she can log in to the new account. Also, the language can be changed in the front page between English and Finnish.
 
 ## Profile page and customization:
 
