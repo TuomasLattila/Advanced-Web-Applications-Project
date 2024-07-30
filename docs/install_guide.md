@@ -25,7 +25,9 @@ After cloning the repository, you need to install all necessary dependencies for
 `npm install`
 
 Then create .env file into the server folder with following variables:
+
 SECRET="some secret string"
+
 PORT=1234
 
 ***3. Start app***
