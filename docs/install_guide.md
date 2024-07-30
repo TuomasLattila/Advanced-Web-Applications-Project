@@ -41,8 +41,8 @@ If you have nodemon installed in the server folder and concurrently installed in
 
 `npm run dev:both`
 
-Else you can open 2 terminal and go to the client and server folders one at a time like in the step 2 using `cd`, and in each run the following script:
+Else you can open 2 terminals and go to the client and server folders one at a time like in the step 2 using `cd`, and in each run the following script:
 
-`npm install`
+`npm start`
 
 Now you should have both client and server running. The client runs on http://localhost:3000/ and the server runs http://localhost:1234
