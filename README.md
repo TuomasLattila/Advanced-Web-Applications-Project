@@ -8,10 +8,14 @@ For the backend I used Node.js combined with Express framework. I used express-g
 
 **Used npm packages:**
 
+![Näyttökuva 2024-07-30 151059](https://github.com/user-attachments/assets/9552999a-91cc-4999-b2f1-7b5a7e78bffc)
+
 ### Frontend
 For the frontend I used react framework combined with mainly my own components and Material UI components.  Material UI is a good framework for react because the documentation is good and there is a lot of good components making the building of UI easier. The frontend skeleton was generated with the create-react-app command-line tool.
 
 **Used npm packages:**
+
+![Näyttökuva 2024-07-30 151132](https://github.com/user-attachments/assets/3dafad2e-4b4e-442a-a8a6-f7cf15ee2fd6)
 
 ## Installation Guideline
 ***Prerequisites***
