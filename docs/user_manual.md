@@ -15,13 +15,14 @@ After successful login, user is directed to his/her profile page, where is displ
 
 ## Navigation and language change:
 
-![Näyttökuva 2024-07-30 154825](https://github.com/user-attachments/assets/6e7d8d93-9f91-4b72-9d8f-1f5795756ae2)
+![Näyttökuva 2024-07-30 154839](https://github.com/user-attachments/assets/4a6570ab-e9f0-4794-923b-c2bc99c0e6f7)
 
 The navigation in the app happens through the navbar, which is on top of the screen. With smaller screen sizes the buttons can be accessed by pressing a hamburger icon in the top left, which opens a side bar containing all the buttons. Start swiping directs user to the app’s swiping feature, chat directs user to chat page, where user can chat with matched users, profile leads to the profile page, and logout logs user out and directs user to the front page. The language can be changed also from the navbar, as you can see in the pictures above.
 
 ## Swiping and chatting features:
 
-![Näyttökuva 2024-07-30 154839](https://github.com/user-attachments/assets/4a6570ab-e9f0-4794-923b-c2bc99c0e6f7)
+![Näyttökuva 2024-07-30 154857](https://github.com/user-attachments/assets/ee7515a1-2277-484b-aef8-5a5bbb9ec856)
+
 
 The main features of the app are liking/disliking (swiping) other users, and if two users have both liked each other (match), they can start chatting with each other. The left picture displays the swiping feature. It displays one new user at a time and the client can like or dislike the user. Liking can happen by pressing the green thumb up button, or by swiping the user card to right. Disliking happens the same way but to left. After swiping, a new user gets displayed, until no more new users to swipe, as shown on the picture. The middle picture displays a list of matched users, and by pressing the chat button on a matched user, you get directed to the chat with the specific user. The chat is displayed on the right picture. User can write new messages, send them, and go back to the matched users list by pressing the arrow button, on the top left.
 
