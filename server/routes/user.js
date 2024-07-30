@@ -67,7 +67,7 @@ router.post('/login', async (req, res, next) => {
       bcrypt.compare(req.body.password, foundUser.password, (err, same) => { //compares the given password to the found password hash
         if (same) {
           const secret = process.env.SECRET
-          const token = jwt.sign({ _id: foundUser._id}, secret, { expiresIn: '30m' }) //creates new JWT token for the user (user_id as payload)
+          const token = jwt.sign({ _id: foundUser._id}, secret, { expiresIn: '60m' }) //creates new JWT token for the user (user_id as payload)
           if (token) {
             res.status(200).json({ success: true, token: token }) //OK (Responds with the new token)
           }
