@@ -12,6 +12,7 @@ Docs:
 
 ## Implemented features and points
 
-![Näyttökuva 2024-07-30 154943](https://github.com/user-attachments/assets/abfa9fc6-1998-4e3f-8b07-1e5ba0ede5d9)
+![Näyttökuva 2024-07-30 154825](https://github.com/user-attachments/assets/7012891d-be8b-4058-89cc-d0ede10a5249)
+
 
 Total points: 46
