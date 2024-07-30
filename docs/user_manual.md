@@ -33,4 +33,4 @@ The main features of the app are liking/disliking (swiping) other users, and if 
 
 
 
-Over all apps accessibility is ok.
+Over all app's accessibility is ok.
