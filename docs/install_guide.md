@@ -12,6 +12,7 @@ Clone the repository using your favourable method or just by navigating to the f
 
 `git clone https://github.com/TuomasLattila/Advanced-Web-Applications-Project.git`
 
+
 ***2. Install dependencies***
 
 After cloning the repository, you need to install all necessary dependencies for the app to work. For this you need to execute following scripts:
@@ -29,6 +30,7 @@ Then create .env file into the server folder with following variables:
 SECRET="some secret string"
 
 PORT=1234
+
 
 ***3. Start app***
 
