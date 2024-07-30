@@ -17,9 +17,10 @@ For the frontend I used react framework combined with mainly my own components a
 ***Prerequisites***
 
 You need:
-•	Node.js 18
-•	npm
-•	git
+- Node.js 18
+- npm
+- git
+
 
 ***1. Clone git repository***
 Clone the repository using your favourable method or just by navigating to the folder where you want to clone the repository and running the following script:
