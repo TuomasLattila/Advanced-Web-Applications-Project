@@ -89,6 +89,7 @@ function DisplayEdit({displayText, label}) { //("the display value", "what user 
       <Stack direction='row' display='flex' justifyContent='space-between' alignItems='center'>
         <Typography
           color='white'
+          sx={{ wordBreak: "break-word" }}
         >
           {displayValue}
         </Typography>

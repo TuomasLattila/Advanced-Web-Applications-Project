@@ -120,7 +120,7 @@ function AcountInfo() {
                     <VisuallyHiddenInput type="file" accept='image/*' onChange={handleImageChange} />
                   </Button>
             </Stack>
-            <Stack direction={'column'} justifyContent={'space-between'} width={'90%'} sx={{ backgroundColor: '#3f51b5', padding: '10px', borderRadius: '10px' }}>
+            <Stack direction={'column'} justifyContent={'space-between'} width={'90%'} sx={{ backgroundColor: '#3F51B5', padding: '10px', borderRadius: '10px' }}>
               <label style={{ fontWeight: 'bold' }} htmlFor='username'>{t('Username')}:</label>
               <div id='username'>
                 <DisplayEdit displayText={username} label={'username'}/>
