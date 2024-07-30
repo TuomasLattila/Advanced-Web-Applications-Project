@@ -4,6 +4,7 @@
 - Node.js 18
 - npm
 - git
+
 <br>
 
 ***1. Clone git repository***
@@ -11,6 +12,7 @@
 Clone the repository using your favourable method or just by navigating to the folder where you want to clone the repository and running the following script:
 
 `git clone https://github.com/TuomasLattila/Advanced-Web-Applications-Project.git`
+
 <br>
 
 ***2. Install dependencies***
@@ -30,6 +32,7 @@ Then create .env file into the server folder with following variables:
 SECRET="some secret string"
 
 PORT=1234
+
 <br>
 
 ***3. Start app***
