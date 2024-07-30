@@ -1,6 +1,8 @@
 # Advanced-Web-Applications-Project Documentation
 This is the project work of the Advanced Web Applications course.
 
+[Installation guideline](docs/install.md)
+
 ## Technology used
 Here is described all the important technologies used in the project, what they are for, and why they were chosen for this app.
 ### Backend
