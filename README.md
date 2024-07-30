@@ -1,5 +1,7 @@
-# Advanced-Web-Applications-Project Documentation
+# Advanced-Web-Applications-Project
 This is the project work of the Advanced Web Applications course.
+
+Docs:
 
 [Installation guideline](docs/install_guide.md)
 
@@ -7,6 +9,9 @@ This is the project work of the Advanced Web Applications course.
 
 [User manual](docs/user_manual.md)
 
-## Features and points
 
-Points: 46
+## Implemented features and points
+
+![Näyttökuva 2024-07-30 154943](https://github.com/user-attachments/assets/abfa9fc6-1998-4e3f-8b07-1e5ba0ede5d9)
+
+Total points: 46
