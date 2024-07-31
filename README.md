@@ -1,7 +1,7 @@
 # Advanced-Web-Applications-Project
 This is the project work of the Advanced Web Applications course.
 
-Docs:
+## Docs:
 
 [Installation guideline](docs/install_guide.md)
 
