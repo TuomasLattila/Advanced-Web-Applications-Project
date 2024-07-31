@@ -92,7 +92,7 @@ function Chat( { matchUser } ) { //takes the matched user's id as prop
                   <Typography sx={{ color: '#000000', wordBreak: "break-word" }}>{msg.msg}</Typography>
                 </Stack>
                 <Stack direction={'row'} spacing={1}>
-                  {msg.from === matchUser.id? <Avatar sx={{ height: { xs: 20, sm: 30, md: 40}, width: { xs: 20, sm: 30, md: 40}}} src={`/images/${matchUser.image}`}></Avatar> : null}
+                  {msg.from === matchUser.id? (matchUser.image !== null? <Avatar sx={{ height: { xs: 20, sm: 30, md: 40}, width: { xs: 20, sm: 30, md: 40}}} src={`/images/${matchUser.image}`}></Avatar> : <Avatar sx={{ height: { xs: 20, sm: 30, md: 40}, width: { xs: 20, sm: 30, md: 40}}} src={null}></Avatar>) : null}
                   <Typography color={'#ffff00'}>{msg.from === matchUser.id? matchUser.username: t('You')}</Typography>
                   <Typography fontSize={10}>{`${(new Date(msg.ts)).getDate()}/${(new Date(msg.ts)).getMonth()+1}/${(new Date(msg.ts)).getFullYear()} ${(new Date(msg.ts)).getHours().toString().padStart(2, 0)}:${(new Date(msg.ts)).getMinutes().toString().padStart(2, 0)}`}</Typography>
                 </Stack>

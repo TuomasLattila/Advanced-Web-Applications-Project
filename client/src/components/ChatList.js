@@ -95,7 +95,7 @@ function ChatList() {
               >
                 <Stack direction={'row'} spacing={4} alignItems={'center'}>
                   <Avatar
-                    src={`/images/${user.image}`}
+                    src={user.image !== null? `/images/${user.image}` : null}
                   ></Avatar>
                   <Typography>
                     {user.username}
