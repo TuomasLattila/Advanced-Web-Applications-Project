@@ -129,7 +129,7 @@ function Swiping() {
             <Typography variant='h6'>{t('Swipe or click')}!</Typography>
             <Stack direction={'column'} spacing={4} textAlign={'center'} sx={{ height: '100%', width: { xs: 170, sm: 250, md: 360}}}>
               <Slider >
-                <div onPointerUp={noMoreNewUsers === false? handleSwipe : handleSwipe} style={{ backgroundColor: "#2196f3", borderRadius: '10px', padding: '10px'}}>
+                <div onPointerUp={noMoreNewUsers === false? handleSwipe : null} style={{ backgroundColor: "#2196f3", borderRadius: '10px', padding: '10px'}}>
                   <Stack direction='column' spacing={1} alignItems={'center'}>
                     <Avatar
                         src={imageSrc}
