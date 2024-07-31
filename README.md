@@ -1,9 +1,9 @@
 # Advanced-Web-Applications-Project
-This is the project work of the Advanced Web Applications course.
+This is a project work of the Advanced Web Applications course.
 
 ## Docs:
 
-[Installation guideline](docs/install_guide.md)
+[Installation guidelines](docs/install_guide.md)
 
 [Technologies used](docs/technologies_used.md)
 
