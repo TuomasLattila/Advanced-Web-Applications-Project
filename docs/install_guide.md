@@ -4,6 +4,7 @@
 - Node.js 18
 - npm
 - git
+- MongoDB 7
 
 <br>
 
